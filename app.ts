@@ -4,3 +4,5 @@ class HelloWorld {
 
 var hello = new HelloWorld('Hello TypeScript');
 console.log(hello.message);
+
+console.log('Hello VSCode');
