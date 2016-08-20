@@ -1,4 +1,5 @@
 node_modules/
+**/js
 built/*
 tests/cases/rwc/*
 tests/cases/test262/*
