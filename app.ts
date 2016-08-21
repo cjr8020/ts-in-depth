@@ -1,8 +1,33 @@
-class HelloWorld {
-    constructor(public message: string) {}
+function GetAllBooks() {
+
+  let books = [
+    { title: 'Ulysses', author: 'James Joyce', available: true },
+    { title: 'A Farewell to Arms', author: 'Ernest Hemingway', available: false },
+    { title: 'I Know Why the Caged Bird Sings', author: 'Maya Angelou', available: true },
+    {title: 'Moby Dick', author: 'Herman Melville', available: true}
+  ];
+
+  return books;
 }
 
-var hello = new HelloWorld('Hello TypeScript');
-console.log(hello.message);
+/**
+ * this function will passed an array..
+ * it is assumed that whatever is passed in has 'length' property.
+ */
+function LogFirstAvailable(books): void {
+  let numberOfBooks: number = books.length;
+  let firstAvailable: string = '';
 
-console.log('Hello VSCode');
+  for (let currentBook of books) {
+    if (currentBook.available) {
+      firstAvailable = currentBook.title;
+      break;
+    }
+  }
+
+  console.log('Total Books: ' + numberOfBooks);
+  console.log('First Available: ' + firstAvailable);
+}
+
+const allBooks = GetAllBooks();
+LogFirstAvailable(allBooks);

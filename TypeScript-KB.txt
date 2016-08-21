@@ -4,3 +4,69 @@
         TypeScript
 
     @@@@@@@@@@@@@@@@@@@@@
+
+
+
+Variables
+---------
+
+primary difference between var and let/const is in the scoping rules.
+
+var
+    Variables declared with 'var' are globally available in the function in which they are declared.
+    Even if a variable is nested levels deep...
+
+    Variables declared with 'var' are hoisted to the top of the function in which they are declared.
+
+
+
+let
+
+const    
+
+    variables declared with 'let' and 'const' are only available in the block in which they are declared
+    not 'hoisted' to the top of the block/container where they are declared.
+
+    variable can be declared by the same name again in the same function where it is already declared.
+
+
+Basic Types
+-----------
+
+  Boolean
+
+  Number
+    floating-point type (just like js)
+
+    function returnNumber(): number {
+      return 42;
+    }
+
+
+  String
+
+    let myString: string = 'this is a string';
+
+  Array  
+    can specify type of the array elements
+
+  Enum
+
+
+  Any
+    any type
+    avoid using this type
+
+  Void
+    specifies absence of a type.   Function return type.
+
+
+TypeScript Inference
+--------------------
+
+TypeScript infers the type based on the assignment.
+  let myString = 'this is a string';    
+Avoid Inference.
+
+
+
