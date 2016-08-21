@@ -1,0 +1,321 @@
+
+
+    @@@@@@@@@@@@@@@@
+
+        SVCode
+
+    @@@@@@@@@@@@@@@@
+
+
+F2              rename (variable names)
+
+Ctrl-Shift-P    command pallette
+Ctrl-k Ctrl-H   toggle output (also command-pallette -> Toggle Output)
+
+
+Basic Editing
+-------------
+
+  ctrl-enter    insert line after (below)
+  ctrl-shift-enter  
+                insert line before
+
+  ctrl-shift-alt-down
+  ctrl-shift-alt-up  
+                copy line(s) down/up              
+
+  Ctrl-Shift-K  delete (kill) line
+  Alt-Down      move line Down
+  Alt-Up        move line up
+
+  ctrl-d        add selection to next find match
+  ctrl-k ctrl-d
+                move selection to next find match
+
+selections
+----------
+
+shift+alt+drag  column or box text selection
+              
+
+
+
+Navigation
+----------
+
+ctrl+shift+\      bracket matching
+
+Folding
+-------
+fold regions of source code.
+
+Fold (Ctrl+Shift+[) folds the innermost uncollapsed region at the cursor
+Unfold (Ctrl+Shift+]) unfolds the collapsed region at the cursor
+Fold All (Ctrl+K Ctrl+0) folds all region in the editor
+Unfold All (Ctrl+K Ctrl+J) unfolds all regions in the editor
+
+
+
+
+Window Management
+-----------------
+  ctrl-shift-n    new window
+  ctrl-shift-w    close window
+
+  Ctrl+K F	     Close Folder	workbench.action.closeFolder
+  unassigned	   Cycle Between Editor Groups
+
+  Ctrl+\	       Split Editor	workbench.action.splitEditor
+  Ctrl+1	       Focus into Left Editor Group
+  Ctrl+2	       Focus into Side Editor Group
+  Ctrl+3	       Focus into Right Editor Group
+
+  Ctrl+K Ctrl+Left	Focus into Editor Group on the Left
+  Ctrl+K Ctrl+Right	Focus into Editor Group on the Right
+  Ctrl+K Left	  Move Active Editor Group Left
+  Ctrl+K Right	Move Active Editor Group Right
+
+
+Find Widget
+-----------
+
+Alt-C           toggles case sensitivity of the find Widget
+                toggleFindCaseSensitive
+Alt-W           toggleFindWholeWord
+
+Ctrl-D          editor.action.addSelectionToNextFindMatch
+                place cursor on word/symbol
+                press ctrl-d repeatedly to add every next match to the selection
+                by putting multiple cursors on every occurrence
+
+                used for refactoring/renaming all variable references, e.g.
+
+F2              rename symbol
+                Some languages support "rename symbol" across files.
+                Press F2 and then type the new desired name and press Enter.
+                All usages of the symbol will be renamed in all files.
+                E.g. renaming a publicly availabe function on an Angular service.
+
+ctrl+shift+f2   editor.action.changeAll
+                allows to rename/refactor all occurrences of a symbol.
+                similar to ctrl+d but you have to hit ctrl+d repeatedly
+
+
+Rich Language Editing
+---------------------
+
+f12             go to definition
+
+Peek
+shift+f12       show references (in peeked editor)
+ctrl+shift+f10  peek definition
+
+ctrl+shift+i    format/reformat code
+
+ctlr+shift+o    goto symbol
+                this will pop up a pallette where you can select 
+                symbols available in your file.
+                press ":" to group symbols by category.
+
+ctrl+t          Open symbol by name.
+                type 1st, 2nd letter to narrow down..
+
+shift+alt+Left
+shift+alt+Right
+                shrink/expand the current selection
+                expanding will select more and more code line by line.
+
+
+
+ctrl+shift+m    display the PROBLEMS panel
+f8 or shift+f8  loop thru errors or warnings.
+
+
+
+
+
+
+Debug
+----- 
+  F5            launch debugger
+  Ctrl-Shift-Y  debug console
+
+====================================================================
+
+Task Runners
+************
+
+Build Task
+
+    command-pallette -> Build Task    (ctlr-shift-b)
+
+
+
+
+====================================================================
+
+  Debug
+  *****
+
+Debug Button   => configure icon (gear icon) at the top of the screen.
+Select "NodeJS" as your debug environment.
+That will create another file to your project - launch.json
+
+Look at the launch configurations in launch.json
+
+"program" says which file to debug (e.g. app.ts)
+"sourceMaps" true - tell the debug to look for the JS file
+"outDir": "js" identifies the directory where source maps are located.
+"externalConsole": true - would open a new terminal to which the debug will go.
+
+"preLaunchTask": "someTask"
+
+
+After configuring..
+Launch the debugger with "green arrow" at the top of the debugger pane (F5)
+
+
+====================================================================
+
+  Color Scheme
+
+Monokai Vivid
+
+====================================================================
+
+    Settings
+    ********
+
+VS Code provides two different scopes for settings:
+
+User
+    these settings apply globally to any instance of VS Code you open
+
+Settings File Locations
+
+    Depending on your platform, the user settings file is located here:
+
+    Windows %APPDATA%\Code\User\settings.json
+    Mac $HOME/Library/Application Support/Code/User/settings.json
+    Linux $HOME/.config/Code/User/settings.json
+
+Workspace
+    these settings are stored inside your workspace in a .vscode folder and only apply when the workspace is opened. Settings defined on this scope overwrite the user scope.
+
+    project/
+        .vscode/
+            settings.json
+
+
+settings.json
+--------------
+
+The settings.json file is divided into these sections:
+
+    Editor
+        - font, word wrapping, tab size, line numbers, indentation, ...
+    Window
+        - restore folders, zoom level, ...
+    Files
+        - excluded file filters, default encoding, trim trailing whitespace, ...
+    File Explorer
+        - encoding, OPEN EDITORS behavior, ...
+    HTTP
+        - proxy settings
+    Search
+        - file exclude filters
+    Git
+        - disable Git integration, auto fetch behavior
+    Telemetry
+        - disable telemetry reporting, crash reporting
+    HTML
+        - HTML format configuration
+    CSS
+        - CSS linting configuration
+    JavaScript
+        - Language specific settings
+    JSON
+        - Schemas associated with certain JSON files
+    Markdown
+        - Add a custom CSS to the Markdown preview
+    Less
+        - Control linting for Less
+    SCSS
+        - Control linting for Sass
+    TypeScript
+        - Language specific settings
+    PHP - PHP linter configuration
+
+
+
+
+========================================================================
+
+  Customizations
+  **************
+
+Settings.json
+-------------
+{
+    // Controls auto save of dirty files. Accepted values:  "off", "afterDelay", "onFocusChange". If set to "afterDelay" you can configure the delay in "files.autoSaveDelay".
+    "files.autoSave": "onFocusChange",
+    
+    // ---------------
+    // Editor
+    // ---------------
+
+    // Controls the delay in ms after which quick suggestions will show up
+    "editor.quickSuggestionsDelay": 100,
+ 
+    // The number of spaces a tab is equal to.
+    "editor.tabSize": 2,
+
+    // When opening a file, `editor.tabSize` and `editor.insertSpaces` will be detected based on the file contents.
+    "editor.detectIndentation": false,
+    
+    // ------------------
+    // TypeScript
+    // ------------------
+
+    // Complete functions with their parameter signature.
+    "typescript.useCodeSnippetsOnMethodSuggest": true
+}
+
+Keybindings
+-----------
+
+default keybindings overrides:
+C:\Users\<user>\AppData\Roaming\Code\User\keybindings.json
+
+
+// Place your key bindings in this file to overwrite the defaults
+[
+{ "key": "ctrl+shift+;",                   "command": "cursorEnd",
+                                     "when": "editorTextFocus" },
+  // remapped from ctrl+f2 because it clashes with 
+  // multiple desktop selector on Linux                                       
+{ "key": "ctrl+shift+f2",           "command": "editor.action.changeAll",
+                                       "when": "editorTextFocus" }                                     
+]
+
+
+Extensions
+----------
+
+tabout
+  https://github.com/albertromkes/tabout
+
+  conflicts with code snippet tab stops
+
+
+================================================================
+
+  Support for GO Language
+  ***********************
+
+https://github.com/Microsoft/vscode-go#options  
+
+
+
+================================================================
+
