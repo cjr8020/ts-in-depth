@@ -32,6 +32,8 @@ Basic Editing
   ctrl-k ctrl-d
                 move selection to next find match
 
+  alt+z         toggle word wrapping                
+
 selections
 ----------
 
@@ -272,6 +274,9 @@ Settings.json
 
     // When opening a file, `editor.tabSize` and `editor.insertSpaces` will be detected based on the file contents.
     "editor.detectIndentation": false,
+
+      // Columns at which to show vertical rulers
+      "editor.rulers": [80, 120],
     
     // ------------------
     // TypeScript
@@ -307,6 +312,54 @@ tabout
 
   conflicts with code snippet tab stops
 
+auto close tag
+--------------
+  https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag
+
+  Auto add HTML/XML close tags.
+
+  To install:
+  Launch command pallette (ctrl+p) and type:
+  ext install auto-close-tag.
+
+  Configuration:
+  Add entry into 'auto-close-tag.activationOnLanguage' to set the 
+  languages that the extension will be activated.
+  Default: ["*"] - all languages.
+
+  {
+      "auto-close-tag.activationOnLanguage": [
+          "html",
+          "xml",
+          "php",
+          "javascript"
+      ]
+  }
+
+  You could also set the tag list that would not be auto closed.
+  Below are the default settings for void elements in the HTML spec, that you could override.
+
+  {
+      "auto-close-tag.excludedTags": [
+          "area",
+          "base",
+          "br",
+          "col",
+          "command",
+          "embed",
+          "hr",
+          "img",
+          "input",
+          "keygen",
+          "link",
+          "meta",
+          "param",
+          "source",
+          "track",
+          "wbr"
+      ]
+  }  
+
 
 ================================================================
 
@@ -317,5 +370,54 @@ https://github.com/Microsoft/vscode-go#options
 
 
 
+================================================================
+    Jasmine and TypeScript
+    **********************
+
+To use Jasmine, you'll need jasmine-core (not jasmine) installed with npm
+either globally or locally to your project (in your node_modules)
+
+Intellisense for Jasmine
+
+To allow VSCode to provide Intellisense for Jasmine, you'll need to install type definitions using Typings, again either globally or locally.
+
+$ npm install -g typings 
+
+Use Typings to install type definitions for Jasmine
+
+$ typings install jasmine --save-dev --ambient
+
+This command will result in the addition of a 'typings' folder in your project which contains a 'main.d.ts' file with references to installed type definitions.
+The '-save-dev" argument will persist the specified typing as a dev dependency in a typings.json file, so that you could re-install the typings later, or after code checkout.
+'--ambient' is required to include Definitely Typed in the lookup.
+
+
+
+
+================================================================
+  HTML Editing
+  ************
+
+HTML auto closing of tags
+-------------------------
+
+has been replaced with '</'  - when you start typing the closing 
+tag, it will be filled in.
+
+There is also Auto Close Tag Extension.
+
+
+
+================================================================
+
+  markdown support
+  ****************
+
+Out of the box:
+
+ctrl+shift+v    while editing a .md file, toggle  switch to preview
+
+ctrl+k v        open a side-by-side preview of md file in the editor.
+  
 ================================================================
 
