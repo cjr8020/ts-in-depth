@@ -69,4 +69,49 @@ TypeScript infers the type based on the assignment.
 Avoid Inference.
 
 
+Enums
+-------
+
+enum Category { Biography, Poetry, Fiction };  // 0, 1, 2
+enum Category { Biography = 1, Poetry, Fiction };  // 1, 2, 3
+enum Category { Biography = 2, Poetry = 4, Fiction = 6 };  // 2,4,6
+
+Friendly names are placed inside the curly braces.
+By default, numbers will be assigned in order.
+
+
+
+Arrays
+------
+
+Can be declared two different ways:
+
+1. 
+  let strArray1: string[] = [ 'here', 'are', 'strings' ];
+
+  let strArray2: Array<string> = [ 'more', 'strings', 'here' ];
+
+  let anyArray: any[] = [42, true];
+
+
+Tuples
+------
+
+special type of array where the first few elements are specified.
+these types do not have to be the same
+
+let myTuple: [number, string] = [25, 'truck'];
+let firstElement = myTuple[0]; // 25
+let secondElement = myTuple[1]; // truck
+
+// additional elements can be any type from those already specified
+
+myTuple[2] = 100;
+myTuple[2] = 'this works too';
+
+
+
+
+
+
 
