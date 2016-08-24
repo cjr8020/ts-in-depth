@@ -110,6 +110,90 @@ myTuple[2] = 100;
 myTuple[2] = 'this works too';
 
 
+Functions
+----------
+
+Functions in TS vs JS
+
+1. TS functions allow you to specify parameter and return types
+2. Parameters: you can declare optional or default values
+  - optional params
+  - default params
+  - rest parameters
+3. Function overloading
+
+4. Support for Arrow functions
+
+
+Parameter Types and Return Types
+
+  function CreateCustomerID(name: string, id: number): string {
+    return name + id;
+  }
+
+Arrow Functions
+
+  lambda functions - a consice way of writing anonymous functions
+
+  let arr = allBooks.filter(function(book) {
+    return book.author === 'Herman Melville';
+  }); 
+
+  Above example of an anonymous function with traditional syntax.
+  Below is the same function written with the arrow syntax:
+
+  let arr = allBooks.filter(book => book.author === 'Herman Melville');
+
+    left of the arrow is param ..  right of the arrow is the function body
+    [         book              =>      book.author === '..'              ]
+
+  syntax
+  ------
+  Here, we're calling "forEach" function on an array.
+  "forEach" takes a function as parameter that will execute once for each element of the array.
+  If my arraw function does not accept any parameters, I must supply empty 
+  parenthesis.
+
+    myBooks.forEach( () => console.log('Done reading!') );
+
+  Here, same as above, except 'title' is a parameter passed to the lambda expression:
+
+    myBooks.forEach( (title) => console.log(title) );
+
+  Note: parenthesis are NOT required for ONE parameter, but are required for multiple:
+
+    myBooks.forEach( (title, idx, arr) => console.log(idx + ' - ' + title) );
+
+  Place multiple lines of function body inside curly braces:
+
+    myBooks.forEach( (title, idx, arr) => {
+
+      console.log(..);
+      // more 
+      // more
+
+    });
+
+
+Capturing 'this' in JavaScript
+-----------------------------
+
+Problem with 'this' - it often represents two different execution contexts in 
+the same block of code.. 
+
+Given this example:
+
+function book() {
+  self.publishDate = 2016;
+  setInterval( function() {
+    console.log(this.publishDate); // can NOT: 'this' refers to something else inside a callback
+  }, 1000);
+}
+
+
+
+
+
 
 
 
