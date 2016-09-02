@@ -5,6 +5,11 @@
 
     @@@@@@@@@@@@@@@@@@@@@
 
+Check typescript version
+
+  $ tsc -version
+  
+      
 
 
 Variables
