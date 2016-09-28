@@ -2,7 +2,7 @@
 
     @@@@@@@@@@@@@@@@
 
-        SVCode
+        VSCode
 
     @@@@@@@@@@@@@@@@
 
@@ -11,6 +11,17 @@ F2              rename (variable names)
 
 Ctrl-Shift-P    command pallette
 Ctrl-k Ctrl-H   toggle output (also command-pallette -> Toggle Output)
+
+preview
+-------
+
+  ctrl-shift-h  preview HTML (when editor text in focus)
+
+  ctrl-shift-b  open your file in browser (configured via Task)
+
+  ctrl-shift-v  markdown show preview
+
+  ctrl-k v      markdown open preview to side
 
 
 Basic Editing
@@ -32,7 +43,12 @@ Basic Editing
   ctrl-k ctrl-d
                 move selection to next find match
 
-  alt+z         toggle word wrapping                
+  alt+z         toggle word wrapping 
+
+
+Search / Find
+
+  ctrl-h        activate Find and Replace                 
 
 selections
 ----------
@@ -173,6 +189,8 @@ Launch HTML file in Chrome
   },
   "args": ["${file}"]
 }
+
+Now, press ctrl-shift-b to open your file in Chrome.
 
 
 
