@@ -1,61 +1,25 @@
-console.log("It works!");
+let myName: string = "Blah";
 
-function GetAllBooks() {
 
-  let books = [
-    { title: 'Ulysses', author: 'James Joyce', available: true, category: Category.Fiction },
-    { title: 'A Farewell to Arms', author: 'Ernest Hemingway', available: false, category: Category.Fiction },
-    { title: 'I Know Why the Caged Bird Sings', author: 'Maya Angelou', available: true, category: Category.Poetry },
-    {title: 'Moby Dick', author: 'Herman Melville', available: true, category: Category.Fiction}
-  ];
+// functions
+function returnMyName(): string {
+  return myName;
+}
+console.log(returnMyName());
 
-  return books;
+// void
+function sayHello(): void {
+  console.log("Hello");
 }
 
-/**
- * this function will passed an array..
- * it is assumed that whatever is passed in has 'length' property.
- */
-function LogFirstAvailable(books): void {
-  let numberOfBooks: number = books.length;
-  let firstAvailable: string = '';
-
-  for (let currentBook of books) {
-    if (currentBook.available) {
-      firstAvailable = currentBook.title;
-      break;
-    }
-  }
-
-  console.log('Total Books: ' + numberOfBooks);
-  console.log('First Available: ' + firstAvailable);
+// multiply function with argument types
+function multiply(value1: number, value2: number): number {
+  return value1 * value2;
 }
 
-enum Category { Biography, Poetry, Fiction, History, Children };
-
-function GetBookTitlesByCategory(categoryFilter: Category): Array<string> {
-  console.log('executing GetBookTitlesByCategory');
-
-  console.log('Getting books in category: ' + Category[categoryFilter]);
-
-  const allBooks = GetAllBooks();
-  const filteredTitles: string[] = [];
-
-  for (let currentBook of allBooks) {
-    if (currentBook.category === categoryFilter) {
-      filteredTitles.push(currentBook.title);
-    }
-  }
-
-  return filteredTitles;
-}
-
-function LogBookTitles(titles: string[]): void {
-  for (let title of titles) {
-    console.log(title);
-  }
-}
-
-const poetryBooks = GetBookTitlesByCategory(Category.Poetry);
-LogBookTitles(poetryBooks);
-
+// function types
+let myMultiply: (val1: number, val2: number) => number;
+//myMultiply = sayHello;  // won't work .. once function type is defined
+//myMultiply();
+myMultiply = multiply;
+console.log(myMultiply(10,2));

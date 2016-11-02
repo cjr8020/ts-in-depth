@@ -6,6 +6,8 @@
 
     @@@@@@@@@@@@@@@@
 
+ctrl-`          open terminal (and toggle terminal windows in and out of view)
+ctrl-shift-`    create another terminal window.
 
 F2              rename (variable names)
 

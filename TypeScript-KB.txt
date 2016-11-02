@@ -12,8 +12,8 @@ Check typescript version
 Compiling:
 
   $ tsc script.ts
-  
-        
+
+
 
 
 Variables
@@ -96,7 +96,7 @@ Never
           I'll be ${ age + 1 } years old next month.`
 
       This is equivalent to:
-
+terminal
         let sentence: string = "Hello, my name is " + fullName + ".\n\n" +
         "I'll be " + (age + 1) + " years old next month."
 
@@ -252,7 +252,6 @@ Never
 
 
 
-
 TypeScript Inference
 --------------------
 
@@ -261,45 +260,43 @@ TypeScript infers the type based on the assignment.
 Avoid Inference.
 
 
-Enums
--------
+Function types
+--------------
 
-enum Category { Biography, Poetry, Fiction };  // 0, 1, 2
-enum Category { Biography = 1, Poetry, Fiction };  // 1, 2, 3
-enum Category { Biography = 2, Poetry = 4, Fiction = 6 };  // 2,4,6
-
-Friendly names are placed inside the curly braces.
-By default, numbers will be assigned in order.
+Typically in JS, you can assign functions to variables. Any functions.
+Here, you can assign sayHello function to myMultiply variable.
 
 
+  // void
+  function sayHello(): void {
+    console.log("Hello");
+  }
 
-Arrays
-------
+  let myMultiply;
+  myMultiply = sayHello;  // no errors..
 
-Can be declared two different ways:
+However, TypeScript allows you to specify function types by describing the
+function signature as type:
 
-1. 
-  let strArray1: string[] = [ 'here', 'are', 'strings' ];
+  // function types
+  let myMultiply: (val1: number, val2: number) => number;
+  //myMultiply = sayHello;  // won't work .. once function type is defined
+  //myMultiply();
 
-  let strArray2: Array<string> = [ 'more', 'strings', 'here' ];
+However, i can assign 'multiply' function to myMultiply variable because 
+it matches the function type:
 
-  let anyArray: any[] = [42, true];
+  // multiply function with argument types
+  function multiply(value1: number, value2: number): number {
+    return value1 * value2;
+  }
 
 
-Tuples
-------
+  myMultiply = multiply;
+  console.log(myMultiply(10,2));
 
-special type of array where the first few elements are specified.
-these types do not have to be the same
 
-let myTuple: [number, string] = [25, 'truck'];
-let firstElement = myTuple[0]; // 25
-let secondElement = myTuple[1]; // truck
-
-// additional elements can be any type from those already specified
-
-myTuple[2] = 100;
-myTuple[2] = 'this works too';
+==============================================================================
 
 
 Functions
@@ -322,6 +319,7 @@ Parameter Types and Return Types
   function CreateCustomerID(name: string, id: number): string {
     return name + id;
   }
+
 
 Arrow Functions
 
