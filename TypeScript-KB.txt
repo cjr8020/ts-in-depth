@@ -9,7 +9,11 @@ Check typescript version
 
   $ tsc -version
   
-      
+Compiling:
+
+  $ tsc script.ts
+  
+        
 
 
 Variables
@@ -150,11 +154,103 @@ Never
       enum Color { Red = 1,  Green = 2, Blue = 4 };       
 
   Any
-    any type
-    avoid using this type
+  ----
+
+    any type - we many need to describe a type of variable that do not know
+    when we write an application.  These may come from some dynamic content,
+    or a 3rd party library.  In these cases, we want to opt out of type 
+    checking and let the values pass thru compile time checks.
+
+      let notSure: any = 4;
+      notSure = "maybe a string?";
+      notSure = false; // okay a boolean
+
+    the 'any' type is a powerful way to work with existing JS.
+    You might expect Object to play a similar role, but variables of type 
+    Object only allow you to assign any value to them - you can't call 
+    arbitrary methods on them:
+
+      let notSure: any = 4;
+      notSure.ifItExists(); // ok, ifItExists method might exist at runtime
+                            // but the compiler doesn't check
+
+      let prettySure: Object = 4; 
+      prettySure.toFixed(); // error: property 'toFixed' doesn't exist
+
 
   Void
+  ----
     specifies absence of a type.   Function return type.
+
+    declaring values of type 'void' is not useful  because you can only 
+    assign 'Undefined' or 'null' to them
+
+  null and Undefined
+  -------------------
+
+    both actually have their own types.
+    much like void - not useful on their own
+
+    When using the "--strictNullChecks" flag, null and undefined are only 
+    assignable to 'void' and their respective types.  This helps avoid many 
+    common errors...
+    In cases where you want to puass in either a string or null or undefined,
+    you can just use the union type:
+
+      string | null | undefined
+
+
+  Never
+  -----
+
+    The never type represents the type of values that never occur.
+    e.g. never is a return type for a function expression or an arrow function
+    expression that always throws an exception or one that never returns.
+
+    The 'never' type is a subtype of every type.. however, 
+    nothing is a subtype of - or assignable to - never, not even 'any'
+
+    examples of functions returning 'never':
+
+      // inferred return type is never
+      function fail() {
+        return error("Something failed");
+      }
+
+      // function returning 'never' must have unreachable end point
+      function infiniteLoop(): never {
+        while (true) {
+         // 
+        }
+      }
+
+
+  Type Assertions
+  ---------------
+
+    sometimes you'll know more about a value than TypeScript does.
+    usually this will happen when you know the type of some entity could be
+    more specific than its current type.
+
+    "type assertions" 
+      - are a way to tell the compiler "trust me, I know what
+      i'm doing"
+      - is like a type cast in other languages
+      - has no runtime impact
+      - purely for the compiler
+
+    there are two forms:
+    a) angle bracket syntax:
+
+      let someValue: any = "this is a string";
+      let strLength: number = (<string>someValue).length;
+
+    b) 'as' syntax
+
+      let  someValue: any = 'this is a string';
+      let strLength: number = (someValue as string).length;
+
+
 
 
 TypeScript Inference
@@ -286,9 +382,33 @@ function book() {
   }, 1000);
 }
 
+==============================================================================
+
+  Modules and Namespaces
+  **********************
+
+Export
+------
+
+  In TypeScript, as well as ES2015, any file containing a top-level 'import' or
+  'export' is considered a module.
+
+  Any declaration 
+    variable
+    function
+    class
+    type alias
+    interface
+  can be exported     
 
 
+Namespaces
+----------
 
+  Provide organization
+
+
+==============================================================================
 
 
 

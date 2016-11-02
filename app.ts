@@ -1,3 +1,5 @@
+console.log("It works!");
+
 function GetAllBooks() {
 
   let books = [
