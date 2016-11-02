@@ -23,3 +23,28 @@ let myMultiply: (val1: number, val2: number) => number;
 //myMultiply();
 myMultiply = multiply;
 console.log(myMultiply(10,2));
+
+// objects
+
+// typescript infers the object type from the declaration
+// property names do matter in the context of objects, order is not important
+let userData = {
+  name: "Max",
+  age: 27
+};
+
+// object type declaration
+let userDataRedefined: { name: string, age: number } = {
+  name: "Max",
+  age: 27
+};
+
+// complex object
+// this object has two properties - "data" and "output"
+let complex: {data: number[], output: (all: boolean) => number[]} = {
+  data: [100, 3.99, 10],
+  output: function(all: boolean): number[] {
+    return this.data;
+  }
+};
+

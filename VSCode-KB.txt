@@ -9,6 +9,8 @@
 ctrl-`          open terminal (and toggle terminal windows in and out of view)
 ctrl-shift-`    create another terminal window.
 
+shift-alt-1     switch between hirozontal/virtical layout
+
 F2              rename (variable names)
 
 Ctrl-Shift-P    command pallette
@@ -130,7 +132,8 @@ Peek
 shift+f12       show references (in peeked editor)
 ctrl+shift+f10  peek definition
 
-ctrl+shift+i    format/reformat code
+ctrl+shift+i    format/reformat code (DOCUMENT)
+ctrl-k ctrl-f   format SELECTION
 
 ctlr+shift+o    goto symbol
                 this will pop up a pallette where you can select 
