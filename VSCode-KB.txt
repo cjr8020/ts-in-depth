@@ -341,12 +341,15 @@ C:\Users\<user>\AppData\Roaming\Code\User\keybindings.json
 
 // Place your key bindings in this file to overwrite the defaults
 [
-{ "key": "ctrl+shift+;",                   "command": "cursorEnd",
-                                     "when": "editorTextFocus" },
-  // remapped from ctrl+f2 because it clashes with 
-  // multiple desktop selector on Linux                                       
+  // remapped from ctrl+f2 because it clashes with
+  // multiple desktop selector on Linux
 { "key": "ctrl+shift+f2",           "command": "editor.action.changeAll",
-                                       "when": "editorTextFocus" }                                     
+                                       "when": "editorTextFocus" },
+{ "key": "ctrl+shift+;",            "command": "cursorEnd",
+                                     "when": "editorTextFocus" }, 
+  // remaped tabout extension keybinding                                                                           
+{ "key": "ctrl+;",                   "command": "tabout",
+                                     "when": "editorTextFocus && !suggestWidgetVisible" }
 ]
 
 
@@ -357,6 +360,10 @@ tabout
   https://github.com/albertromkes/tabout
 
   conflicts with code snippet tab stops
+
+  the default "tab" key is overridden in keybindings.json
+
+
 
 auto close tag
 --------------

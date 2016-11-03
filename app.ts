@@ -48,3 +48,16 @@ let complex: {data: number[], output: (all: boolean) => number[]} = {
   }
 };
 
+// new object - with the same declaration
+let complex2: {data: number[], output: (all: boolean) => number[]} = {
+  data: [100, 2.33, 10],
+  output: function(all: boolean): number[] {
+    return this.data;
+  }
+}
+
+// how do I store the type definition? classes is one option.
+// another option is a Type Alias
+type Complex = {data: number[], output: (all: boolean) => number[]};
+
+
