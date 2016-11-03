@@ -185,6 +185,7 @@ terminal
     declaring values of type 'void' is not useful  because you can only 
     assign 'Undefined' or 'null' to them
 
+
   null and Undefined
   -------------------
 
@@ -198,6 +199,45 @@ terminal
     you can just use the union type:
 
       string | null | undefined
+
+  Nullable types
+  --------------
+
+    // Nullable
+    let canBeNull = 12;
+    canBeNull = null; // and now its null
+
+    // undefined
+    let canAlsoBeNull; // at this point its undefined cause its uninitialized
+    canAlsoBeNull = null;
+
+
+
+  Non-Nullable types
+  ------------------    
+
+    tsconfig.json
+
+    "strictNullChecks": true
+
+      // now its Non-Nullable
+      let cannotBeNull = 12;
+      cannotBeNull = null; // and now its null    
+
+      Error: type 'null' is not assignable to type 'number'
+
+    If you still want to allow null, use UNION Type
+
+      // still Nullable
+      let stillNullable: number | null = 12;
+      stillNullable = null; // no problem ..
+
+    With this compiler setting type 'any' is NO LONGER INFERRED!
+
+      // can this be any?
+      let canThisBeAny = null; // with strictNullChecks, what type is this?
+      canThisBeAny = 12; // error: 'number' is not assignable to type 'null'
+
 
 
   Never
@@ -224,6 +264,7 @@ terminal
         }
       }
 
+    Main use: with functions or code that will never be reached
 
   Type Assertions
   ---------------
@@ -368,7 +409,7 @@ typeof
     console.log("this is a number");
   }
 
-  
+
 
 
 ==============================================================================
