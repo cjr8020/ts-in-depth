@@ -49,6 +49,8 @@ Basic Editing
 
   alt+z         toggle word wrapping 
 
+  ctrl+j        join lines [via Join Lines Extension]
+
 
 Search / Find
 
@@ -453,6 +455,13 @@ https://marketplace.visualstudio.com/items?itemName=brpaz.file-templates
       http://www.creativebloq.com/web-design/how-use-html-boilerplate-11513798
 
 
+  Join Lines Extension
+  --------------------
+
+  https://github.com/wmaurer/vscode-join-lines
+
+  Use Ctrl+j | ⌘+j to join lines, just like in Atom and similar to Sublime Text: the next line is joined to the 
+  current line, and all whitespace is replaced with a single space.
 
 
 

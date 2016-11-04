@@ -65,7 +65,7 @@ type Complex = {data: number[], output: (all: boolean) => number[]};
 type BankAccount = {money: number, deposit: (value: number) => void};
 let bankAccount: BankAccount = {
   money: 2000,
-  deposit (value: number): void {
+  deposit: function (value: number): void {
     this.money += value;
   }
 };
@@ -79,3 +79,12 @@ let myself: {name: string, bankAccount: BankAccount, hobbies: string[]} = {
 myself.bankAccount.deposit(300);
 console.log(myself);
 
+var person = {
+  name: "Brendan Eich",
+  hello: function(thing) {
+    console.log(this.name + " says hello " + thing);
+  }
+}
+
+var boundHello = person.hello.bind(person);
+boundHello("world");

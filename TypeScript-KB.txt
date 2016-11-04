@@ -416,7 +416,7 @@ typeof
   type BankAccount = {money: number, deposit: (value: number) => void};
   let bankAccount: BankAccount = {
     money: 2000,
-    deposit (value: number): void {
+    deposit: function (value: number): void {
       this.money += value;
     }
   };
@@ -437,6 +437,39 @@ typeof
 Functions
 ----------
 
+  just as in JS, TS functions can be created both as a named function or as
+  an anonymous function.
+
+    // named
+    function add(x,y) {
+      return x+y;
+    }
+
+    // named with types
+    function add(x: number, y: number): number { ... }
+
+
+    // anonymous
+    let myAdd = function(x,y) { return x+y; };
+    // anonymous with type
+    let myAdd = function(x: number, y: number): number { ... }
+
+  just as in JS, functions can refer to variables outside of the function body.
+  when they do so, they're said to CAPTURE these variables. 
+
+  function types:
+
+    let myAdd = 
+       function(x, y): number { return x+y; };
+
+    let myAdd: (x: number, y: number)=>number =         
+       function(x: number, y: number): number { return x+y; };
+or
+    let myAdd: (baseValue: number, increment: number)=>number =         
+       function(x: number, y: number): number { return x+y; };
+
+
+
 Functions in TS vs JS
 
 1. TS functions allow you to specify parameter and return types
@@ -448,15 +481,155 @@ Functions in TS vs JS
 
 4. Support for Arrow functions
 
+In TS, every parameter is assumed to be required.  A parameter can be given a 
+null or undefined if desired.  However, the compiler will check that the user
+has provided a value for each parameter.
 
-Parameter Types and Return Types
+in JS, every param is optional, and users may leave them off as they see fit.
+When they do, the value is undefined.
+In TS, we can add a (?) to the end of the parameter to make it optional.
 
-  function CreateCustomerID(name: string, id: number): string {
-    return name + id;
+  function buildName(firstName: string, lastName?: string) {
+    if (lastName) { return firstName + " " + lastName; }
+    else return firstName;
   }
+
+Any OPTIONAL parameters must FOLLOW required parameters.
+DEFAULT values:
+
+  function buildName(firstName: string, lastName = "Smith") { ... }
+
+  let result1 = buildName("Bob"); // result is "Bob Smith"
+  let result2 = buildName("Bob", undefined); // same ...
+  let result3 = buildName("Bob", "Adams"); // result is "Bob Adams"
+
+
+Rest (of the) Parameters
+------------------------
+
+  function buildName(firstName: string, ...restOfName: string[]) {
+    return firstName + " " + restOfName.join(" ");
+  }
+
+  Rest parameters are treated as a boundless number of optional parameters.
+
+  The ellipses (...) is also used in the type of the function with rest params:
+
+  let buildNameCopy: (fname: string, ...rest: string[]) => string = buildName;
+
+
+this
+---------------------------------
+
+  understanding JS function invokation and 'this'
+  http://yehudakatz.com/2011/08/11/understanding-javascript-function-invocation-and-this/
+  (see section at the bottom of this page).
+
+In JS, 'this' is a variable that gets set when a function is called.
+This is a powerful and flexible feature, but it comes at a cost of always
+having to know about the context in which the function is executing.
+
+Example:
+
+    let deck = {
+        suits: ["hearts", "spades", "clubs", "diamonds"],
+        cards: Array(52),
+        createCardPicker: function() {
+            return function() {
+              // . . .
+              return {suit: this.suits[pickedSuit], card: pickedCard % 13};
+            }
+        }
+    }
+
+    let cardPicker = deck.createCardPicker();
+    let pickedCard = cardPicker();  
+
+    alert("card: " + pickedCard.card + " of " + pickedCard.suit);
+
+If we run this example - we get an error.
+This is because the 'this' being used in the function created by 
+createCardPicker() method will be set to WINDOW instead of the "deck" object.
+
+That's because we call cardPicker() "on its own" - a top-level non-class-method 
+syntax call will use "window" for "this".  (or undefined in strict mode).
+
+We can FIX this problem by making sure the function is bound to the correct 'this'
+before we return it to be used later.
+
+  ES6 Arrow functions capture the 'this' where the function is created
+  ***************************************
+
+TO DO THIS - we use ES6 arrow syntax --> arrow functions capture the 'this' 
+where the function is created rather than where it is invoked:
+
+
+        createCardPicker: function() {
+            return () => {
+              // . . .
+              return {suit: this.suits[pickedSuit], card: pickedCard % 13};
+            }
+        }
+
+--noImplicitThis flag
+-------------------------
+
+TypeScript will warn you when you make this mistake if you pass 
+the "--noImplicitThis" flag to the compiler.
+
+However, as it stands, you will still get an error because 
+"this.suits[pickedSuit]" is of type "any".
+That's because "this" comes from the function expression inside the object
+literal: 
+  suits: ["hearts", "spades", "clubs", "diamonds"],
+
+To fix this, provide an explicit "this" parameter...
+
+
+'this' Parameter
+-----------------------
+Purpose: ensure that a function is always called on the expected object.
+
+  --noImplicitThis is not going to throw errors.
+
+'this' parameter is a fake parameter that comes first in the parameter list 
+of a function:
+
+    function f(this: void) {
+      // make sure that 'this' is unusable in this standalone function
+    }
+
+To fix the example above, add a couple of interfaces to make types clearer:
+
+    interface Card {
+      suit: string;
+      card: number;
+    }
+
+    interface Deck {
+      suits: string[];
+      cards: number[];
+      createCardPicker(this: Deck): () => Card; 
+    }
+
+    let deck: Deck = {
+
+      suits: ["hearts", "spades", "clubs", "diamonds"],
+      cards: Array(52);
+      // NOTE: the arrow function now explicitly specifies that 
+      // its callee must be of type Deck
+      createCardPicker: function(this: Deck) {
+        return () => {
+          // ...
+          return {suit: this.suits[pickedSuit], card: pickedCard % 13};
+        }
+      }
+    }
+
 
 
 Arrow Functions
+----------------
 
   lambda functions - a consice way of writing anonymous functions
 
@@ -539,6 +712,111 @@ Namespaces
 ----------
 
   Provide organization
+
+
+==============================================================================
+
+  JS function invocation and 'this'
+  *********************************
+http://yehudakatz.com/2011/08/11/understanding-javascript-function-invocation-and-this/
+
+The core primitive - a Function's call() method
+------------------
+  here is what it does:
+
+  1. make an argList out of params 1 thru end
+  2. the first param is 'thisValue'
+  3. invoke the function with 'this' set to 'thisValue' and 'argList'
+
+    function hello(thing) {
+      console.log(this + " says hello " + thing);
+    }
+    hello.call("Yehuda", "world"); // outputs "Yehuda says hello world"
+
+Obviously, invoking functions with call() all the time would be pretty annoying.
+JS allows us to invoke functions directly using the parens syntax:
+
+  function hello(thing) {
+    console.log("Hello " + thing);
+  }
+  hello("World");
+  // which is really:
+  hello.call(window, "World");
+
+This behaviour changed in ECMAScript 5 ONLY when using STRICT mode:
+
+  // with ES5 "use strict"
+  hello.call(undefined, "world");  
+
+In other words:
+
+  fn(...args)  <==>  fn.call(window [ES5-strict: undefined], ...args)
+
+                     function being called should change its 'thisValue'
+                     to the global object when not in strict mode.
+
+
+Member Functions
+----------------
+
+  var person = {
+    name: "Brendan Eich",
+    hello: function(thing) {
+      console.log(this + " says hello " + thing);
+    }
+  }
+  person.hello("world");
+
+// same as
+
+  person.hello.call(person, "world"); 
+
+// And if we attach 'hello' method dynamically .. 
+
+  function hello(thing) {
+    console.log(this + " say hello " + thing);
+  }
+  person = { name: "Brendan Eich" }
+  person.hello = hello;
+  person.hello("world"); // still same as person.hello.call(person, "world")
+
+  // but calling the standalone function (in non-strict mode)
+  
+  hello("world"); // "[object DOMWindow]world"
+
+NOTE: the function doesn't have a PERSISTENT notion of its 'this'  -- it is 
+always set at call time based upon the way it was invoked by the caller.
+
+
+Using Function.prototype.bind
+------------------------------
+
+sometimes it can be convenient to have a reference to a function with a
+PERSISTENT 'this' value -- so people have used a simple closure trick to convert
+a function into one with an unchanging 'this':
+
+  var person = {
+    name: "Brendan Eich",
+    hello: function(thing) {
+      console.log(this.name + " says hello " + thing);
+    }
+  }
+
+  var boundHello = function(thing) { 
+    return person.hello.call(person, thing);
+  }
+    
+General purpose trick - ES5 introduced new method: bind() on all Function objects
+
+  var person = {
+    name: "Brendan Eich",
+    hello: function(thing) {
+      console.log(this.name + " says hello " + thing);
+    }
+  }
+
+  var boundHello = person.hello.bind(person);
+  boundHello("world");
 
 
 ==============================================================================
