@@ -716,6 +716,47 @@ Namespaces
 
 ==============================================================================
 
+  TypeScript compiler
+  *******************
+
+tsconfig.js - TS compiler options
+
+  noEmitOnError (default: false)  - do not compile with errors
+  sourceMap (default: false)      - compile TS source map from which JS is generated
+                                    one advantage is you can place debug points
+                                    in the source map using Chrome Dev Tools 
+
+  noImplicitAny                   - enables checks on explicitely setting type
+
+  noImplicitThis
+
+  strictNullChecks
+
+  noUnusedParameters              - all function parameters should be used
+
+
+
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "noImplicitAny": false,
+        "noImplicitThis": false,
+        "sourceMap": false,
+        "noEmitOnError": true,
+        "strictNullChecks": true,
+        "noUnusedParameters": true
+    },
+    "exclude": [
+      "node_modules"
+    ]
+}  
+
+
+
+
+==============================================================================
+
   JS function invocation and 'this'
   *********************************
 http://yehudakatz.com/2011/08/11/understanding-javascript-function-invocation-and-this/
