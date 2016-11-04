@@ -31,6 +31,9 @@ var
 
 let
 
+  unlike 'var' which creates a global scope variable, let creates a block
+  scope variable
+
 const    
 
     variables declared with 'let' and 'const' are only available in the block in which they are declared
@@ -631,19 +634,62 @@ To fix the example above, add a couple of interfaces to make types clearer:
 Arrow Functions
 ----------------
 
-  lambda functions - a consice way of writing anonymous functions
+  fat arrow .. aka lambda function
 
-  let arr = allBooks.filter(function(book) {
-    return book.author === 'Herman Melville';
-  }); 
+  Motivation: 
+    - keyword 'function' is not required
+    - lexically captures the meaning of 'this'
+    - lexically captures the meaning of 'arguments'
 
-  Above example of an anonymous function with traditional syntax.
-  Below is the same function written with the arrow syntax:
+    let incrFunction = (x) => x + 1;
+    console.log('increment 2: ' + incrFunction(2));
 
-  let arr = allBooks.filter(book => book.author === 'Herman Melville');
+  Arrow functions capture the meaning of 'this' from the surrounding context.
 
-    left of the arrow is param ..  right of the arrow is the function body
-    [         book              =>      book.author === '..'              ]
+    let incrFunction = (x) => x + 1;
+    console.log('increment 2: ' + incrFunction(2));
+
+    function Person(age) {
+      console.log("'this' typeof: " + typeof this);
+      this.age = age;
+      this.growOld = function() {
+        this.age++;
+      }
+    }
+
+
+    let person: any  = new Person(1);
+    setTimeout(person.growOld, 1000);
+
+    setTimeout(
+      function() {
+        console.log(person.age); // 1, but should have been 2
+      },
+      2000
+    ); 
+           
+  In above example, person.age is not incremented because 'this' in 
+  this.age refers to "Window" object because it is "Window" is what is executing
+  the growOld() function.
+
+  We can fix this with using an arrwo function:
+
+      ...
+      this.growOld = () => {
+         this.age++;
+      } 
+      ...
+
+  The reason this works is because the reference to 'this' is captured by the
+  arrow function from outside the function body  ... 
+
+Learn about ES6 arrow functions
+---------------------------
+MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+https://www.sitepoint.com/es6-arrow-functions-new-fat-concise-syntax-javascript/
+http://exploringjs.com/es6/ch_arrow-functions.html
+
+
 
   syntax
   ------
