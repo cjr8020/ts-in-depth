@@ -16,3 +16,5 @@ function makeArray(...args: number[]) {
   return args;
 }
 console.log(makeArray(1, 2, 6, 7));
+
+

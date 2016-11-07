@@ -561,6 +561,48 @@ Default Parameters
   parameters.
 
 
+Destructuring Arrays and Objects
+----------------------
+
+  for-of loop 
+  -----------
+
+    The for-of loop supports destructuring:
+
+      const map = new Map().set(false, 'no').set(true, 'yes');
+      for (const [key, value] of map) {
+        console.log(key + ' is ' + value);
+      }  
+
+
+Template literals
+-----------------
+
+  ES6 has two new kinds of literals:
+
+    template literals
+
+      - multi-line string literals that support interpolation
+
+        const firstName = 'Jane';
+        console.log(`Hello ${firstName}!
+        How are you
+        today?`);
+
+        // Output:
+        // Hello Jane!
+        // How are you
+        // today?        
+
+    tagged template literals
+
+      Tagged template literals (short: tagged templates) are created by mentioning a function before a template literal:
+
+        > String.raw`A \tagged\ template`
+        'A \\tagged\\ template'
+
+      Here, the method String.raw is called to produce the result of the 
+      tagged template.
 
 
 this
