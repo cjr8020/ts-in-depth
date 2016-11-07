@@ -1,24 +1,18 @@
-console.log('------------ ARROW FUNCTIONS ------------');
+
+console.log("Default Parameters");
+
+const countdown = (start: number): void => {
+  while (start > 0) {
+    start--;
+  };
+  console.log("Done!", start);
+};
+countdown(10);
 
 
-let incrFunction = (x) => x + 1;
-console.log('increment 2: ' + incrFunction(2));
+console.log("Rest Parameters");
 
-function Person(age) {
-  console.log("'this' typeof: " + typeof this);
-  this.age = age;
-  this.growOld = () => {
-    this.age++;
-  }
+function makeArray(...args: number[]) {
+  return args;
 }
-
-
-let person: any  = new Person(1);
-setTimeout(person.growOld, 1000);
-
-setTimeout(
-  function() {
-    console.log(person.age); // 1, but should have been 2
-  },
-  2000
-); 
+console.log(makeArray(1, 2, 6, 7));

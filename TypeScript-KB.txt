@@ -507,18 +507,60 @@ DEFAULT values:
   let result3 = buildName("Bob", "Adams"); // result is "Bob Adams"
 
 
+
+Spread Operator
+---------------
+  (...)
+  turns iterable values into arguments, 
+  e.g. turns an array into a list an argument list:
+
+    > Math.max(-1, 5, 11, 3)
+    or
+    > Math.max(...[-1, 5, 11, 3]); 
+
+
 Rest (of the) Parameters
 ------------------------
+  without rest parameters, passing an unknown list of arguments is cumbersome:
 
-  function buildName(firstName: string, ...restOfName: string[]) {
-    return firstName + " " + restOfName.join(" ");
-  }
+    function makeArray(arg1: number, arg2: number) {
+      return [arg1, arg2];
+    }
+    console.log(makeArray(1, 2));  
+
 
   Rest parameters are treated as a boundless number of optional parameters.
 
+    function makeArray(...args: number[]) {
+      return args;
+    }
+    console.log(makeArray(1, 2, 6, 7));
+
+
   The ellipses (...) is also used in the type of the function with rest params:
 
-  let buildNameCopy: (fname: string, ...rest: string[]) => string = buildName;
+    let buildNameCopy: (fname: string, ...rest: string[]) => string = buildName;
+
+
+
+
+Default Parameters
+------------------
+
+  const countdown = (start: number = 10): void => {
+    while (start > 0) {
+      start--;
+    };
+    console.log("Done!");
+  };
+
+  countdown(10);
+  countdown();
+
+  with default parameters, this function can now be called without any 
+  parameters.
+
+
 
 
 this
@@ -631,15 +673,39 @@ To fix the example above, add a couple of interfaces to make types clearer:
 
 
 
+
+
 Arrow Functions
 ----------------
 
   fat arrow .. aka lambda function
 
+    const gree = () => {
+      console.log("Hello");
+    };
+
   Motivation: 
     - keyword 'function' is not required
     - lexically captures the meaning of 'this'
     - lexically captures the meaning of 'arguments'
+
+syntax
+------
+
+  to specify parameters:
+
+    () => { ... }; // no parameters
+     x => { ... }; // one parameter, an identifier
+(x, y) => { ... }; // several parameters
+
+  to specify a body:
+
+    x => { return x * x };  // block
+    x => x * x;             // expression, equivalent to line above.
+
+
+
+Arrow functions essentially bind(this)      
 
     let incrFunction = (x) => x + 1;
     console.log('increment 2: ' + incrFunction(2));
