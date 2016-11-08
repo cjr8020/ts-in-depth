@@ -844,6 +844,262 @@ function book() {
 
 ==============================================================================
 
+  classes
+  *******
+
+http://www.typescriptlang.org/docs/handbook/classes.html
+
+Traditional JS focuses on functions and prototype-based inheritance as basic 
+means of building up reusable components.
+
+ES6 adds OO class-based approach.
+
+
+    class Greeter {
+      greeting: string;
+      
+      constructor(message: string) {
+        this.greeting = message;
+      }
+
+      greet() {
+        return `Hello, ${this.greeting}`;
+      }
+
+    }
+
+    let greeter = new Greeter("world");
+    console.log(greeter.greet());
+
+Referring to "this.greeting" denotes that "member access".
+
+using "new" calls into the constructor to initialize.
+
+  inheritance
+  -----------
+
+extends
+super()  
+
+    class Animal {
+      name: string;
+
+      constructor(aName: string) { this.name = aName; }
+      move(distanceInMeters: number = 0) {
+        console.log(`${this.name} moved ${distanceInMeters}m.`);
+      }
+    }
+
+    class Snake extends Animal {
+      constructor(name: string) { super(name); }
+      move(distanceInMeters = 5) {
+        console.log("Slithering ... ");
+        super.move(distanceInMeters);
+      }
+    }
+
+    class Horse extends Animal {
+      constructor(name: string) {
+        super(name);
+      }
+
+      move(distanceInMeters = 45) {
+        console.log("Galloping ... ");
+        super.move(distanceInMeters);
+      }
+    }
+
+    let sam = new Snake("Sammy the Python");
+    let tom: Animal = new Horse("Tommy the Palomeno");
+
+    sam.move();
+    tom.move(34);   
+
+!!! NOTE: even though tom is "Animal", when tom.move(..) is called,
+the overriding Horse.move(..) method is called... 
+In Java, it wouldve been Animal.move() method ...
+
+
+  static
+  --------
+
+static members are visible on the class itself rather than on instances.
+
+
+    static origin = {x: 0, y: 0};  
+
+
+
+
+  public private and protected
+  ----------------------------
+
+public by default
+
+  you could still (and maybe should) use "public" explicitly
+
+    public name: string;
+
+private
+
+protected
+
+
+NOTE: any notion of 'private' will be gone from the compiled JS.
+https://yakovfain.com/2015/06/30/the-private-in-typescript-is-kinda-private/
+
+This
+
+    class Person {
+      public firstName: string;
+      public lastName: string;
+      public age: number;
+      private ssn: string;
+
+      constructor(
+          firstName: string,
+          lastName: string,
+          age: number,
+          ssn: string) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.age = age;
+            this.ssn = ssn;
+          }
+    }
+
+    let p = new Person("John", "Smith", 29, "123-45-6789");
+    console.log(`Last name: ${p.lastName},
+    SSN: ${p.ssn};
+    `)
+
+will be compiled to this:
+
+    var Person = (function () {
+        function Person(firstName, lastName, age, ssn) {
+            this.firstName = firstName;
+            this.lastName;
+            this.age = age;
+            this.ssn = ssn;
+        }
+        return Person;
+    })();
+ 
+There must be some reason why creators of the TypeScript compiler didn’t 
+turn the class Person into the JavaScript closure that would actually 
+make ssn private, for example:
+
+    var Person = (function () {
+        var _ssn;  
+        
+        function Person(firstName, lastName, age, ssn) {
+          
+            this.firstName = firstName;
+            this.lastName;
+            this.age = age;
+            _ssn = ssn;  // uses closure and does not provide direct access to _ssn
+        }
+        return Person;
+    })();
+
+
+
+    readonly modifier
+    -----------------
+
+You can make properties readonly by using 'readonly' keyword.
+readonly properties must be initialized at their declaration or in the 
+constructor.
+
+  readonly name: string;
+  readonly numberOfLegs: number = 8;
+
+  constructor (aName: string) {
+    this.name = aName;
+  }    
+
+  Parameter properties
+  --------------------
+
+allow you to create and initialize a member in one place:
+
+  constructor(readonly name: string) {
+    ...
+  }
+
+This consolidates declaration and assignment in one place.
+Parameter properties are declared by prefixing a constructor parameter with
+an accessibility modifier or readonly, or both.
+
+  accessors (getters and setters)
+  -------------------------------
+
+class Employee {
+
+  private _fullName: string;
+
+  get fullName(): string {
+    return this._fullName;
+  }
+
+  set fullName(newName: string) {
+    if (...) {
+      this._fullName = newName;
+    }
+  }
+}  
+
+
+
+  absract classes
+  ---------------
+
+abstract classes may not be instantiated directly.
+Unlike an interface, abstact class may contain implementation details for 
+its members.
+
+  abstract class Animal {
+
+    abstract makeSound(): void;
+    move(): void {
+      // implementation
+    }
+
+  }  
+
+
+private constructors and singletons
+-----------------------------------
+
+    class Logger {
+
+      private static _instance: Logger;
+
+      private constructor() {}
+
+      public static getInstance(): Logger {
+        if (!Logger._instance) {
+          Logger._instance = new Logger();
+        }
+        return Logger._instance;
+      }
+
+      public trace(message: string) {
+        console.log('[Trace] ' + message);
+      }
+
+      //  .. more methods
+    }
+
+    // let illegalLogger = new Logger(); // ERROR
+
+    let logger = Logger.getInstance();
+
+    logger.trace("Hello World!");
+
+
+==============================================================================
+
   Modules and Namespaces
   **********************
 

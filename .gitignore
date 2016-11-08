@@ -1,5 +1,6 @@
 # ignore generated javascript in this project
 **/*.js
+**/*.js.map
 
 # compiled output
 /dist
