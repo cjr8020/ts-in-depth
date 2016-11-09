@@ -1166,6 +1166,20 @@ Main difference - modules declare their dependencies.
 Modules provide for better code reuse, stronger isolation and better tooling
 support for bundling.
 
+  namespaces                    vs                modules
+  --------------------------------------------------------
+  organize your app with              organize with real modules
+  JS objects
+
+  can be split over multiple          can be split 
+  files
+
+  no module loader needed             loader required
+
+  dependencies get difficult          explicit dependency declaration
+  to manage
+
+
   Loading modules
   ---------------
 
