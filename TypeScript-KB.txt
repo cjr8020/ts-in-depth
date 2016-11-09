@@ -1221,15 +1221,37 @@ Namespaces
 
   Provide organization (previously "internal modules")
 
-  namespace Validation {
-    export interface StringValidator { ... }
-    export class ZipCodeValidator implements StringValidator { ... }
-  }
+    namespace Validation {
+      export interface StringValidator { ... }
+      export class ZipCodeValidator implements StringValidator { ... }
+    }
 
-  // using validators
-  let validators: {
-    [s: string]: Validation.StringValidator;
-  } = {};
+    // using validators
+    let validators: { [s: string]: Validation.StringValidator; } = {};
+    validators["ZIP code"] = new Validation.ZipCodeValidator();
+    validators["Letters only"] = new Validation.LettersOnlyValidator();
+
+  With that all validators are declared in their own namespace, not in 
+  global namespace.
+
+  Namespaces can be extended across multiple files:
+
+    namespace declaration will be repeated in all files - namespaces will be
+    automatically combined.
+
+    you can of course import all using <script></script> tag
+  or
+    $ tsc --outFile app.js circleMath.ts rectangleMath.ts app.ts
+
+  or 
+    you can import all namespaces:
+
+    /// <reference path="circleMath.ts"/>
+    /// <reference path="rectangleMath.ts"/>
+
+    and with this, you don't need '--outFile' trick..
+
+    
 
 
 
