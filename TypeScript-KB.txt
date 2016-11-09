@@ -269,6 +269,13 @@ terminal
 
     Main use: with functions or code that will never be reached
 
+
+================================================================================
+
+  Types
+  *****
+
+
   Type Assertions
   ---------------
 
@@ -394,6 +401,8 @@ Type alias allows us to create a Type definition.
   // another option is a Type Alias
   type Complex = {data: number[], output: (all: boolean) => number[]};
 
+
+
 Union Types
 -----------
 
@@ -432,6 +441,49 @@ typeof
 
   myself.bankAccount.deposit(300);
   console.log(myself);
+
+
+
+  Indexable Types and Objects
+  ---------------------------
+
+Similar to how we can use interfaces to describe function types, we can also
+describe types that we can "index into" like 
+
+  a[10], or
+  personMap["daniel"]
+
+Indexable types have an index signature that describes the types we can use to 
+index into the object.
+
+  interface Vehicle {
+    start(): void;
+    stop(): void;
+  }
+
+  class Car implements Vehicle {
+    // ...
+  }
+
+  interface CarMap {
+    [model: string]: Car;
+  }
+
+  let map: CarMap = {};
+  map["audi"] = new Car();
+  let audi = map["audi"];
+
+
+Note: you can also make index signatures readonly in order to prevent assignment
+to their indeces:
+
+  interface ReadonlyStringArray {
+    readonly [index: number]: string;
+  }
+
+  let myArray: ReadonlyStringArray = ["Alice", "Bob", "Candice"];
+  // myArray[3] = "Carrol";   // error
+  // myArray[2] = "Mallory";  // error
 
 
 ==============================================================================
@@ -1103,13 +1155,29 @@ private constructors and singletons
   Modules and Namespaces
   **********************
 
+Namespaces are simply named JS objects in the global namespace.  
+They can span multiple files, and can be concatenated using --outFile.
+Namespaces could be a good way to structure your code in a webapp, with all the 
+dependencies included as <script> tags in your HTML code.
+
+Modules: just like namespaces, can contain both code and declarations.
+Main difference - modules declare their dependencies.
+
+Modules provide for better code reuse, stronger isolation and better tooling
+support for bundling.
+
+Modules have dependency on a module loader (e.g. CommonJS/Require.js).
+For a small JS application, this might be overkill, but for larger apps, the cost
+comes with long-term modularity and maintainability benefits.
+
+
 Export
 ------
 
   In TypeScript, as well as ES2015, any file containing a top-level 'import' or
   'export' is considered a module.
 
-  Any declaration 
+  Any declaration:
     variable
     function
     class
@@ -1118,10 +1186,51 @@ Export
   can be exported     
 
 
+export interface StringValidator { ... }
+export class ZipCodeValidator implements StringValidator { ... }
+
+class ZipCodeValidator implements ..
+
+export { ZipCodeValidator };
+export { ZipCodeValidator as MainValidator };
+
+import
+------
+
+Import a single export from a module
+
+  import { ZipCodeValidator } from "./ZipCodeValidator";
+  let myValidator = new ZipCodeValidator();
+
+or 
+
+  import { ZipCodeValidator as ZCV } from "./ZipCodeValidator";
+  let myValidator = new ZCV;
+
+Import the entire module in a single variable, and use it to access
+individual module exports
+
+  import * as validator from "./ZipCodeValidator";
+  let  myValidator = new validator.ZipCodeValidator();
+
+
+
+
 Namespaces
 ----------
 
-  Provide organization
+  Provide organization (previously "internal modules")
+
+  namespace Validation {
+    export interface StringValidator { ... }
+    export class ZipCodeValidator implements StringValidator { ... }
+  }
+
+  // using validators
+  let validators: {
+    [s: string]: Validation.StringValidator;
+  } = {};
+
 
 
 ==============================================================================
