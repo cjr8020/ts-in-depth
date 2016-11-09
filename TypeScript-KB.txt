@@ -444,8 +444,134 @@ typeof
 
 
 
-  Indexable Types and Objects
-  ---------------------------
+
+
+==============================================================================
+
+  interfaces
+  **********
+
+define contracts within your code as well as contracts with code outside of 
+your project.
+
+In TS, interfaces fill the role of naming types.
+
+Optional properties
+-------------------
+
+    interface SquareConfig {
+      width: number;
+      color?: string;
+    }
+
+    function createSquare(config: SquareConfig): {width: number, color: string} {
+      let newSquare = {width: 100, color: "white" };
+
+      if (config.color){
+        newSquare.color = config.color;
+      }
+
+      return newSquare;
+    }
+
+    let mySquare = createSquare({width: 100});
+    console.log("mySquare: " + mySquare);
+
+
+
+Readonly properties
+-------------------
+
+some properties should only be modifiable when an object is first created.
+
+interface Point {
+  readonly x: number;
+  readonly y: number;
+}
+
+// construct a Point
+let p1: Point = { x: 10, y: 20 };
+// but cannot change it 
+p1.x = 5; // error
+
+NOTE: TS comes with 
+
+  ReadonlyArray<T> (with all mutators of Array<T> removed)
+
+
+Function Types
+--------------
+
+Interfaces describe a wide range of shapes taht JS objects can take.
+In addition to describing an object with properties, interfaces are also 
+capable of describing function types.
+
+To describe a function type with an interface, we give the interface a 
+call signature.
+
+  call signature: this is like a function declaration with only the
+  parameter list and return types given.
+
+    interface SearchFunction {
+      (source: string, subString: string): boolean;
+    }  
+
+Once defined, we can use this function type interface to create a function:
+
+    let mySearch: SearchFunction;
+    mySearch = function(source: string, subString: string): boolean {
+      . . .
+    }
+
+
+Indexable Types - Purpose
+-------------------------
+
+Indexable types are described in section below.
+Here is an example of the syntax:
+
+  interface StringArray {
+    [index: number]: string;
+  }
+
+but the purpose is unclear...
+
+One of the purposes apparently is to allow interfaces declare a property
+of unknown name.
+Here NamedPerson interface defines a property whose named can be 
+specified at the time of object creation:
+
+    console.log("--- indexable type to define unknown property");
+
+    interface NamedPerson {
+      firstName: string;
+      age?: number;
+      [propName: string]?: any;
+    }
+
+    function greet(person: NamedPerson): void {
+      console.log(`Hello ${person.firstName}`);
+    }
+
+    function changeName(person: NamedPerson, newName: string): void {
+      person.firstName = newName;
+    }
+
+    let max: NamedPerson = {
+      firstName: "Max",
+      hobbies: ["Cooking", "Sports"]
+    };
+
+    greet(max);
+    changeName(max, "Anna");
+    greet(max);
+
+
+
+
+
+Indexable Types and Objects
+---------------------------
 
 Similar to how we can use interfaces to describe function types, we can also
 describe types that we can "index into" like 
@@ -484,6 +610,8 @@ to their indeces:
   let myArray: ReadonlyStringArray = ["Alice", "Bob", "Candice"];
   // myArray[3] = "Carrol";   // error
   // myArray[2] = "Mallory";  // error
+
+
 
 
 ==============================================================================
@@ -894,6 +1022,9 @@ function book() {
   }, 1000);
 }
 
+
+
+
 ==============================================================================
 
   classes
@@ -1231,6 +1362,8 @@ export { ZipCodeValidator as MainValidator };
 
 import
 ------
+
+Import from absolute or relative path.
 
 Import a single export from a module
 
