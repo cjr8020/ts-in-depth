@@ -16,6 +16,13 @@ F2              rename (variable names)
 Ctrl-Shift-P    command pallette
 Ctrl-k Ctrl-H   toggle output (also command-pallette -> Toggle Output)
 
+
+refactor
+--------
+
+  F2            rename symbol (all occurrences)
+
+
 preview
 -------
 
@@ -371,7 +378,29 @@ auto close tag
 --------------
   https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag
 
-  Auto add HTML/XML close tags.
+  Usages:
+
+    1. [default] after typing in the closing bracket of the openning tag,
+       the closing tag will be inserted automatically
+
+By default, autoclose is enabled:
+
+{
+    "auto-close-tag.enableAutoCloseTag": true
+}
+
+
+    2. to add close tag manually:
+
+        ctrl-alt-.
+
+  Sublime Text 3 mode:
+
+    To automatically add close tag when </ is typed, add to settings:
+
+        {
+            "auto-close-tag.SublimeText3Mode": true
+        }
 
   To install:
   Launch command pallette (ctrl+p) and type:
@@ -390,6 +419,12 @@ auto close tag
           "javascript"
       ]
   }
+
+    Note: The setting should be set with language id defined in VS Code. 
+    Taking javascript definition as an example, we need to use javascript for .js and .es6, 
+    use javascriptreact for .jsx. 
+    So, if you want to enable this extension on .js file, 
+    you need to add javascript in settings.json.  
 
   You could also set the tag list that would not be auto closed.
   Below are the default settings for void elements in the HTML spec, that you could override.

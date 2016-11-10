@@ -1,47 +1,37 @@
 
-console.log("------ Intefaces -------");
+console.log("------ Generics -------");
 
-console.log("--- optional properties ---");
+// simple echo function
+function echo<T>(arg: T[]): T[] {
 
-interface SquareConfig {
-  width: number;
-  color?: string;
+  console.log(arg.length); // 
+
+  return arg;
 }
 
-function createSquare(config: SquareConfig): {width: number, color: string} {
-  let newSquare = {width: 100, color: "white" };
+console.log(echo(["Max", "Jane"]));
+console.log(echo([27,30,11]));
 
-  if (config.color){
-    newSquare.color = config.color;
-  }
 
-  return newSquare;
+console.log("------ Built-in Generics -------");
+
+const testResults: Array<number> = [1.94, 2.33];
+
+
+console.log("------ Generic Classes -------");
+
+class GenericNumber<T> {
+  zeroValue: T;
+  add: (x: T, y: T) => T;
 }
 
-let mySquare = createSquare({width: 100});
-console.log("mySquare: " + mySquare);
+let myGenericNumber = new GenericNumber<number>();
+myGenericNumber.zeroValue = 0;
+myGenericNumber.add = function(x,y) { return x + y; };
+console.log(myGenericNumber.add(2, 5));
 
-console.log("--- indexable type to define unknown property");
 
-interface NamedPerson {
-  firstName: string;
-  age?: number;
-  [propName: string]: any;
-}
-
-function greet(person: NamedPerson): void {
-  console.log(`Hello ${person.firstName}`);
-}
-
-function changeName(person: NamedPerson, newName: string): void {
-  person.firstName = newName;
-}
-
-let max: NamedPerson = {
-  firstName: "Max",
-  hobbies: ["Cooking", "Sports"]
-};
-
-greet(max);
-changeName(max, "Anna");
-greet(max);
+let numericString = new GenericNumber<string>();
+numericString.zeroValue = "";
+numericString.add = function(x,y) { return x + y; };
+console.log(numericString.add(numericString.zeroValue, "test"));

@@ -454,7 +454,9 @@ typeof
 define contracts within your code as well as contracts with code outside of 
 your project.
 
-In TS, interfaces fill the role of naming types.
+In TS, interfaces fill the role of naming types
+
+  NOTE: interfaces do not get compiled into JS at all.
 
 Optional properties
 -------------------
@@ -611,6 +613,24 @@ to their indeces:
   // myArray[3] = "Carrol";   // error
   // myArray[2] = "Mallory";  // error
 
+
+
+methods definitions in interface
+--------------------------------
+
+    interface NamedPerson {
+      firstName: string;
+      age?: number;
+      [propName: string]: any;
+
+      greet(lastName: string): void;
+    }
+
+
+interface inheritance
+---------------------
+
+interface NamedPerson extends Person { ... }
 
 
 
@@ -1279,6 +1299,144 @@ private constructors and singletons
     let logger = Logger.getInstance();
 
     logger.trace("Hello World!");
+
+
+==============================================================================
+
+  Generics
+  ********
+
+Major part of sw engineering is building components that not only have a well
+defined and consistent APIs, but are also reusable.
+
+Generics help create components that can work on a variety of types.
+
+    // simple echo function
+    function echo(arg: any): any {
+      return arg;
+    }
+
+Instead of using 'any', we need to capture the type of the argument in such
+a way that we can also use it to denote what is being returned.
+
+  type variable: special kind of variable that works on types, rather then values.
+
+    // simple echo function
+    function echo<T>(arg: T): T {
+      return arg;
+    }
+
+    console.log(echo("Max"));
+    console.log(echo(27));    
+
+
+what if we tried to get the length of the argument?
+Then we also need to indicate that the argument is a type that has "length"
+attribute:
+
+  function echo<T>(arg: T[]): T[] {
+
+    console.log(arg.length); // 
+
+    return arg;
+  }
+
+  console.log(echo(["Max", "Jane"]));
+  console.log(echo([27,30,11]));
+
+We can read the type of this generic "echo" function as:
+
+  "the generic function echo takes a type parameter T, and an argument
+  'arg' which an array of T's, and returns an array of T's".
+
+
+Generic Types
+-------------
+
+
+    Generic Function Types
+
+The type of generic functions is just like those of non-generic functions,
+with the type parameters listed first:
+
+  function echo<T>(arg: T): T {
+    return arg;
+  }
+
+// creating a new constant, defining generic type with return,
+// and finally assigning 'echo' function to the new constant variable.  
+
+  let myEcho: <T>(arg: T) => T = echo;
+
+If we expected array types of T, we could write this:
+
+    function echo<T>(arg: T[]): T[] {
+
+      console.log(arg.length); // 
+
+      return arg;
+    }
+
+    console.log(echo(["Max", "Jane"]));
+    console.log(echo([27,30,11]));
+
+
+We can also write the generic type as a call signature of an object literal:
+
+  let myEcho: {<T>(arg: T):T}  = echo;  
+
+Let's define a generic interface for a generic echo function:
+
+  interface GenericEchoFunction {
+    <T>(arg:T): T;
+  }
+
+  function echo<T>(arg: T): T {
+    return arg;
+  }
+
+  let myEcho: GenericEchoFunction = echo;
+
+
+  Generic Class
+----------------
+A generic class has a similar shape to a generic interface.
+Generic classes have a generic  type parameter list in (<>) brackets
+following the name of the class:
+
+    class GenericNumber<T> {
+      zeroValue: T;
+      add: (x: T, y: T) => T;
+    }
+
+    let myGenericNumber = new GenericNumber<number>();
+    myGenericNumber.zeroValue = 0;
+    myGenericNumber.add = function(x,y) { return x + y; };
+    console.log(myGenericNumber.add(2, 5));
+
+Constraints:
+
+class SimpleMath<T extends number> { .. }
+class SimpleMath<T extends number | string> { .. }
+
+class SimpleMath<T, U extends number | string> { .. }
+class SimpleMath<T extends number, U extends number | string> { .. }
+
+
+
+
+
+NOTE: casting variable to a number:
+
+  return +this.baseValue * +this.multiplyValue;  // '+' casts to number
+
+
+Built-in Generics
+------------------
+
+  built-in Array type is generic:
+
+    const testResults: Array<number> = [1.94, 2.33];
 
 
 ==============================================================================
