@@ -575,11 +575,28 @@ specified at the time of object creation:
 Indexable Types and Objects
 ---------------------------
 
+  [ key: string ]   =   string
+           or           number
+          number        object
+
+
 Similar to how we can use interfaces to describe function types, we can also
 describe types that we can "index into" like 
 
-  a[10], or
-  personMap["daniel"]
+    class Car {
+      public make: string;
+      public constructor(make: string) {
+        this.make = make;
+      }
+    }
+
+    interface CarMap {
+      [model: string]: Car;
+    }
+
+    let map: CarMap = {};
+    map["audi"] = new Car("T1");
+    console.log("audi: " + map["audi"].make); 
 
 Indexable types have an index signature that describes the types we can use to 
 index into the object.
@@ -919,6 +936,25 @@ To fix the example above, add a couple of interfaces to make types clearer:
 
 Arrow Functions
 ----------------
+
+Basic Syntax:
+
+  (param1, param2, ..., paramN) => { statements }
+
+  (param1, param2, ..., paramN) => expression
+  (param1, param2, ..., paramN) => { return expression; }
+
+// with one param, parens are optional:
+
+  (singleParam)  => { statements }
+   singleParam   => { statements }
+
+// no params, requires parens
+  () => { statements }
+  () => { return expression; }
+
+
+
 
   fat arrow .. aka lambda function
 
@@ -1727,6 +1763,11 @@ General purpose trick - ES5 introduced new method: bind() on all Function object
 
   var boundHello = person.hello.bind(person);
   boundHello("world");
+
+
+==============================================================================
+
+Q: 
 
 
 ==============================================================================

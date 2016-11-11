@@ -1,4 +1,21 @@
 
+console.log("------ Indexable Types again -------");
+
+class Car {
+  public make: string;
+  public constructor(make: string) {
+    this.make = make;
+  }
+}
+
+interface CarMap {
+  [model: string]: Car;
+}
+
+let map: CarMap = {};
+map["audi"] = new Car("T1");
+console.log("audi: " + map["audi"].make); 
+
 console.log("------ Generics -------");
 
 // simple echo function
@@ -35,3 +52,68 @@ let numericString = new GenericNumber<string>();
 numericString.zeroValue = "";
 numericString.add = function(x,y) { return x + y; };
 console.log(numericString.add(numericString.zeroValue, "test"));
+
+
+console.log("------ Generic Map Exercise -------");
+
+
+class GenericMap<T> {
+  private items: { [key: string]: T};
+  
+  constructor() {
+    this.items = {};
+  }
+
+  setItem(key: string, item: T): void {
+    this.items[key] = item;
+  }
+
+  getItem(key: string): boolean {
+    return key in this.items;
+  }
+
+  clear(): void {
+    this.items = {};
+  }
+
+  private valuesToArray<T>( obj: { [key: string]: T; } | { [key: number]: T; } ): T[] {
+    return Object.keys(obj).map(key => obj[key]);
+  }
+
+  printMap(): void {
+
+    // get the keys of 'this.items': "apples, bananas"
+    let keys: string[] = Object.keys(this.items);
+    console.log(`
+      keys: ${keys}
+    `);
+
+    // call map on keys array, where callback fn generates values array
+    let mappedValues: T[] = keys.map(key => this.items[key]);
+    console.log(`
+      mappedValues: ${mappedValues}
+    `);
+
+    // use valuesToArray(..) private method
+    console.log(`
+      valuesToArray: ${this.valuesToArray(this.items)}
+    `);
+
+    for(let key of keys){
+      console.log(`key[${key}<=>value[${this.items[key]}]]`);    
+    }
+
+  }
+
+    
+}
+
+const numberMap = new GenericMap<number>();
+numberMap.setItem('apples', 5);
+numberMap.setItem('bananas', 10);
+numberMap.printMap();
+
+const stringMap = new GenericMap<string>();
+stringMap.setItem('name', 'Max');
+stringMap.setItem('age', '27');
+stringMap.printMap();
