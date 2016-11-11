@@ -1477,6 +1477,95 @@ Built-in Generics
 
 ==============================================================================
 
+  Generics Exercise
+  *****************
+
+Looked at Basarat's TS collections for example of Dictionary
+https://github.com/basarat/typescript-collections/blob/release/src/lib/Dictionary.ts
+
+Looked at this post for an example:
+http://stackoverflow.com/questions/23096260/is-there-a-typescript-list-and-or-map-class-library
+
+Looked for ideas on how to manipulate indexed types:
+http://stackoverflow.com/questions/35370414/how-to-iterate-over-string-indexed-array-in-typescript
+
+  console.log("------ Generic Map Exercise -------");
+
+
+  class GenericMap<T> {
+    private items: { [key: string]: T};
+    
+    constructor() {
+      this.items = {};
+    }
+
+    setItem(key: string, item: T): void {
+      this.items[key] = item;
+    }
+
+    hasKey(key: string): boolean {
+      return key in this.items;
+    }
+
+    getItem(key: string): T {
+      return this.items[key];
+    }
+
+    clear(): void {
+      this.items = {};
+    }
+
+    private valuesToArray<T>( obj: { [key: string]: T; } | { [key: number]: T; } ): T[] {
+      return Object.keys(obj).map(key => obj[key]);
+    }
+
+    printMap(): void {
+
+      // get the keys of 'this.items': "apples, bananas"
+      let keys: string[] = Object.keys(this.items);
+      console.log(`
+        keys: ${keys}
+      `);
+
+      // call map on keys array, where callback fn generates values array
+      let mappedValues: T[] = keys.map(key => this.items[key]);
+      console.log(`
+        mappedValues: ${mappedValues}
+      `);
+
+      // use valuesToArray(..) private method
+      console.log(`
+        valuesToArray: ${this.valuesToArray(this.items)}
+      `);
+
+      for(let key of keys){
+        console.log(`key[${key}<=>value[${this.items[key]}]]`);    
+      }
+
+    }
+
+      
+  }
+
+  const numberMap = new GenericMap<number>();
+  numberMap.setItem('apples', 5);
+  numberMap.setItem('bananas', 10);
+  numberMap.printMap();
+  console.log("hasKey('bananas'): " + numberMap.hasKey('bananas'));
+  console.log("getItem('bananas): " + numberMap.getItem('bananas'));
+
+  const stringMap = new GenericMap<string>();
+  stringMap.setItem('name', 'Max');
+  stringMap.setItem('age', '27');
+  stringMap.printMap();
+  console.log("hasKey('bananas'): " + stringMap.hasKey('bananas'));
+  console.log("hasKey('name'): " + stringMap.hasKey('name'));
+  console.log("getItem('name'): " + stringMap.getItem('name'));
+
+
+
+==============================================================================
+
   Modules and Namespaces
   **********************
 
@@ -1767,7 +1856,82 @@ General purpose trick - ES5 introduced new method: bind() on all Function object
 
 ==============================================================================
 
-Q: 
+Q: How do I manipulate indexed types?
+
+    I have defined a static property as such:
+
+    private static colorsByName: { [index: string]: MyColorClass}
+    but when I attempt to use for... of from the answer listed here: TypeScript for-in statement
+
+    for(let value of MyClass.colorsByName) {
+        ...
+    }
+    I get an error:
+
+    Type { [index: string]: MyColorClass; } is not an array type or a string type.
+
+
+
+A:
+http://stackoverflow.com/questions/35370414/how-to-iterate-over-string-indexed-array-in-typescript
+
+  It's not an array. 
+  It's an object with string keys and properties of type MyColorClass.
+
+  What you can do, is turn it into an array. 
+  You can do this by getting an array of the object's keys then map the keys 
+  to the properties of the object:
+
+  Object.keys(MyClass.colorsByName).map(prop => MyClass.colorsByName[prop]).forEach(color =>{
+      // use color here
+  });
+
+    This is who I got keys:
+
+      // get the keys of 'this.items': "apples, bananas"
+      let keys: string[] = Object.keys(this.items);
+      console.log(`
+        keys: ${keys}
+      `);      
+
+    Here is how i got values:
+
+      // call map on keys array, where callback fn generates values array
+      let mappedValues: T[] = keys.map(key => this.items[key]);
+      console.log(`
+        mappedValues: ${mappedValues}
+      `);    
+
+      for(let key of keys){
+        console.log(`key[${key}<=>value[${this.items[key]}]]`);    
+      }      
+
+  Since you might do this a lot, you could create a reusable function to turn the properties into an array:
+
+  function propsToArray<T>(obj: { [index: string]: T; } | { [index: number]: T; }) {
+      return Object.keys(obj).map(prop => obj[prop]);
+  }
+
+    Here is mine:
+
+      private valuesToArray<T>( obj: { [key: string]: T; } | { [key: number]: T; } ): T[] {
+        return Object.keys(obj).map(key => obj[key]);
+      }    
+
+
+
+  Then you could use it with for...of:
+
+    for (let color of propsToArray(MyClass.colorsByName)) {
+        // use color here
+    }
+
+  Or with forEach:
+
+    propsToArray(MyClass.colorsByName).forEach(color => {
+        // use color here
+    });
+
 
 
 ==============================================================================

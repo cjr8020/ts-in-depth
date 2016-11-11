@@ -68,8 +68,12 @@ class GenericMap<T> {
     this.items[key] = item;
   }
 
-  getItem(key: string): boolean {
+  hasKey(key: string): boolean {
     return key in this.items;
+  }
+
+  getItem(key: string): T {
+    return this.items[key];
   }
 
   clear(): void {
@@ -112,8 +116,13 @@ const numberMap = new GenericMap<number>();
 numberMap.setItem('apples', 5);
 numberMap.setItem('bananas', 10);
 numberMap.printMap();
+console.log("hasKey('bananas'): " + numberMap.hasKey('bananas'));
+console.log("getItem('bananas): " + numberMap.getItem('bananas'));
 
 const stringMap = new GenericMap<string>();
 stringMap.setItem('name', 'Max');
 stringMap.setItem('age', '27');
 stringMap.printMap();
+console.log("hasKey('bananas'): " + stringMap.hasKey('bananas'));
+console.log("hasKey('name'): " + stringMap.hasKey('name'));
+console.log("getItem('name'): " + stringMap.getItem('name'));
