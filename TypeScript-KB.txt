@@ -1563,6 +1563,22 @@ http://stackoverflow.com/questions/35370414/how-to-iterate-over-string-indexed-a
   console.log("getItem('name'): " + stringMap.getItem('name'));
 
 
+NOTE: 
+
+two for loop flavors:
+
+  for (let key in keys) {
+
+  }
+
+or  
+
+  for (let kes in this.map) {
+    console.log(key, this.map[key]);
+  }
+
+
+
 
 ==============================================================================
 
@@ -1705,6 +1721,110 @@ Namespaces
     and with this, you don't need '--outFile' trick..
 
 
+
+==============================================================================
+
+  Decorators
+  **********
+
+Decorators provide a way to add both annotations and meta-programming syntax for
+class declarations and members.
+
+Decorators are a stage 1 proposal for JS and an experimental feature of TS.
+
+$ tsc --experimentalDecorators
+
+tsconfig.json:
+
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "experimentalDecorators": true
+    }
+}
+
+Decorators use the form "@expression" where "expression" must evaluate to a 
+function that will be called at runtime with information about the decorated
+declaration.
+
+
+  Class Decorators
+  ****************
+
+A class decorator is declared just before a class declaration.
+It is applied to the constructor of the class and can be used to observe,
+modify or replace a class definition.
+
+    console.log("------ Class Decorators -------");
+
+    function observable(constructor: Function){
+      console.log(`Class ${constructor.name} is being created... `);
+    }
+
+    @observable
+    class Greeter {
+      greeting: string;
+      constructor(message: string) {
+        this.greeting = message;
+      }
+      greet() {
+        return "Hello, " + this.greeting;
+      }
+    }
+
+  Decorator Factories
+  *******************
+
+If we want to customize how a decorator is applied to a declaration, we can write
+a decorator factory.
+
+Decorator Factory = a function that returns the expression that will be called
+by the decorator at runtime.
+
+In other words, a decorator factory that takes a parameter to return a
+decorator function
+
+  function color(value: string) {   // this is the decorator factory
+    return function(target) {       // this is the decorator
+      // do soemthing with target and value
+    }
+  }
+
+Another example:
+
+    function printable(constructorFn: Function) {
+      constructorFn.prototype.print = function () {
+        console.log(this);
+      }
+    }
+
+    @printable
+    class Plant {
+      name: string = "Green Plant";
+    }
+
+    const plant: Plant = new Plant();
+    plant.print();
+
+
+
+
+
+  Method Decorators
+  *****************
+
+declared just before a method declaration.
+the expression for the method decorator will be called as a function at 
+runtime, with the following three args:
+
+  1. either the constructor function of the class for a static member, or
+  the prototype of the class for an instance member
+
+  2. the name of the member
+
+  3. the Property Descriptor for the member
+
+    Property Descriptor will be undefined if <ES5  
 
 
 
