@@ -1976,6 +1976,66 @@ General purpose trick - ES5 introduced new method: bind() on all Function object
 
 ==============================================================================
 
+  Using JS libraries with TypeScript
+  **********************************
+
+Using jQuery as example
+
+Install jQuery
+--------------
+
+$ npm install --save jquery
+
+Import the library using SystemJS
+----------------------------------
+
+$ npm install --save systemjs
+
+index.html
+----------
+<head>
+    <script src="node_modules/systemjs/dist/system.js"></script>
+
+<body>
+<script>
+  // set out baseURL reference path
+  SystemJS.config({
+    map: {
+      "jQuery": "node_modules/jquery/dist/jquery.min.js"
+    },
+    baseURL: '/',
+    defaultJSExtensions: true
+  });
+  SystemJS.import('app.js');
+</script>
+
+create a tag to test
+--------------------
+
+<div id="app">Change with jQuery</div>
+
+
+import jquery TS definitions from DefinitelyTyped
+-------------------------------------------------
+
+jquery.d.ts
+
+$ npm install --save-dev @types/jquery
+
+  this adds line to package.json and an entry in 
+
+    node_modules/@types/jquery/...
+
+
+
+
+
+
+
+
+
+==============================================================================
+
 Q: How do I manipulate indexed types?
 
     I have defined a static property as such:
