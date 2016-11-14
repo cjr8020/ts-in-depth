@@ -2026,12 +2026,84 @@ $ npm install --save-dev @types/jquery
 
     node_modules/@types/jquery/...
 
+In your code:
 
+app.ts:
 
+  import "jQuery";
+  $("#app").css({"background-color": "green"});    
 
+==============================================================================
 
+  using Webpack
+****************
 
+$ npm install --save-dev webpack ts-loader
 
+in tsconfig
+------------
+
+{
+    "compilerOptions": {
+        "target": "es5",
+        "noImplicitAny": false,
+        "noImplicitThis": false
+    }
+}
+
+create webpack.config.js
+-------------------------
+
+module.exports = {
+  entry: "./app.ts",
+  output: {
+    filename: "bundle.js"
+  },
+  module: {
+    loaders: [
+      { test: /\.ts$/, loader: "ts-loader" }
+    ]
+  }
+};
+
+package.json
+------------
+add a couple of scripts:
+
+    "build": "webpack -d --watch",
+    "build:prod": "webpack -p"
+
+NOTE: ts-loader is looking for local typescript:
+
+  $ npm run build
+
+  > ts-in-depth@1.0.0 build /home/craiskin/ws/8020/ts/ts-in-depth
+  > webpack -d --watch
+
+  Hash: 396f0bfb9d565b6f60f0
+  Version: webpack 1.13.3
+  Time: 90ms
+      + 1 hidden modules
+
+  ERROR in Cannot find module 'typescript'
+
+so, install typescript as local dependency
+
+$ npm install --save-dev typescript
+
+change the import statment:
+---------------------------
+
+import $ = require("jquery");
+
+move the bundle.js import script below its usage:
+-------------------------
+
+<body>
+
+  <div id="app">Change it with jQuery</div>
+
+  <script src="bundle.js"></script>
 
 
 ==============================================================================

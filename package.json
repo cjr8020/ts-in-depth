@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "lite-server"
+    "start": "lite-server",
+    "build": "webpack -d --watch",
+    "build:prod": "webpack -p"
   },
   "repository": {
     "type": "git",
@@ -19,7 +21,10 @@
   "homepage": "https://github.com/cjr8020/ts-in-depth#readme",
   "devDependencies": {
     "@types/jquery": "^2.0.34",
-    "lite-server": "^2.2.2"
+    "lite-server": "^2.2.2",
+    "ts-loader": "^1.2.0",
+    "typescript": "^2.0.9",
+    "webpack": "^1.13.3"
   },
   "dependencies": {
     "jquery": "^3.1.1",

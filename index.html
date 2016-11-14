@@ -7,23 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Learning TypeScript</title>
     <!-- <script src="app.js"></script> -->
-    <script src="node_modules/systemjs/dist/system.js"></script>
 </head>
 <body>
 
-<div id="app">Change it with jQuery</div>
+  <div id="app">Change it with jQuery</div>
 
-<script>
-  // set out baseURL reference path
-  SystemJS.config({
-    map: {
-      "jQuery": "node_modules/jquery/dist/jquery.min.js"
-    },
-    baseURL: '/',
-    defaultJSExtensions: true
-  });
-  SystemJS.import('app.js');
-</script>
+  <script src="bundle.js"></script>
 
 </body>
 </html>

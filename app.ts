@@ -1,4 +1,4 @@
-import "jQuery";
+import $ = require("jquery");
 
 
 
