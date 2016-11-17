@@ -2,6 +2,12 @@
     "compilerOptions": {
         "target": "es5",
         "noImplicitAny": false,
-        "noImplicitThis": false
+        "noImplicitThis": false,
+        "typeRoots": [
+          "../node_modules/@types"
+        ],
+        "types": [
+          "core-js"
+        ]
     }
 }

@@ -2108,6 +2108,31 @@ move the bundle.js import script below its usage:
 
 ==============================================================================
 
+  RxJs
+  ****
+
+$ npm install --save RxJs
+
+
+import Rx = require("rxjs/Rx");
+
+  error: cannot find Promise
+
+$ npm install --save-dev @types/core-js
+
+  error: cannot find type definition for 'chai'
+
+$ npm install --save-dev @types/chai
+
+$ npm start # start the lite-server
+$ npm run build # to run tsc and watch for changes
+
+
+
+
+
+==============================================================================
+
 Q: How do I manipulate indexed types?
 
     I have defined a static property as such:

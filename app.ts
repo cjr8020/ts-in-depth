@@ -1,9 +1,36 @@
-import $ = require("jquery");
+import Rx = require("rxjs/Rx");
 
 
+console.log("------ using RxJS -------");
 
-console.log("------ using external JS libraries with TS -------");
+console.log("------ Observer pattern -------");
 
-console.log("------ using jQuery -------");
+class Producer {
 
-$("#app").css({"background-color": "green"});
+  listeners: any[];
+
+  constructor() {
+    this.listeners = [];
+  }
+
+  public add(listener: any): void {
+    this.listeners.push(listener);
+  }
+
+  public remove(listener: any): void {
+    var index = this.listeners.indexOf(listener);
+    this.listeners.splice(index, 1);
+  }
+
+  public notify(message): void {
+    this.listeners.forEach(listener => listener(message));
+  }
+}
+
+const notifier = new Producer();
+const listener = (message) => console.log(`Listerner received message: ${message}`);
+
+notifier.add(listener);
+notifier.notify('Hello');
+
+
