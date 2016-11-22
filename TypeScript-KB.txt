@@ -8,6 +8,14 @@
 Check typescript version
 
   $ tsc -version
+
+Install latest stable:
+
+  $ sudo npm install -g typescript
+
+Install nightly build
+
+  $ sudo npm install -g typescript@next    
   
 Compiling:
 
