@@ -171,6 +171,7 @@ Debug
 ----- 
   F5            launch debugger
   Ctrl-Shift-Y  debug console
+  Ctrl-j        debug console (was originally, but now overridden by join-lines)
 
 ====================================================================
 
@@ -559,5 +560,33 @@ ctrl+shift+v    while editing a .md file, toggle  switch to preview
 
 ctrl+k v        open a side-by-side preview of md file in the editor.
   
+================================================================
+
+  support for experimental decorators
+  ***********************************
+
+tsconfig.json
+-------------
+
+{
+  "compilerOptions": {
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["es6", "dom"],
+    "mapRoot": "./",
+    "module": "es6",
+    "moduleResolution": "node",
+    "outDir": "../dist/out-tsc",
+    "sourceMap": true,
+    "target": "es5",
+    "typeRoots": [
+      "../node_modules/@types"
+    ]
+  }
+}
+
+
+
 ================================================================
 
