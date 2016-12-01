@@ -362,11 +362,18 @@ C:\Users\<user>\AppData\Roaming\Code\User\keybindings.json
                                      "when": "editorTextFocus && !suggestWidgetVisible" }
 ]
 
+================================================================================
 
-Extensions
-----------
+  **************
+  
+    Extensions
+
+  **************
+
 
 tabout
+--------------------------------------------------------------------
+
   https://github.com/albertromkes/tabout
 
   conflicts with code snippet tab stops
@@ -376,7 +383,8 @@ tabout
 
 
 auto close tag
---------------
+--------------------------------------------------------------------
+
   https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag
 
   Usages:
@@ -451,14 +459,21 @@ By default, autoclose is enabled:
       ]
   }  
 
+
+
 HTML code snippets
-------------------
+----------------------------------------------------------------------
+
 https://github.com/abusaidm/html-snippets
 
 Type part of snippet, press enter -> snippet unfolds.
 
+
+
+
 File Templates
----------------
+----------------------------------------------------------------------
+
 https://marketplace.visualstudio.com/items?itemName=brpaz.file-templates
 
   to install:
@@ -491,14 +506,108 @@ https://marketplace.visualstudio.com/items?itemName=brpaz.file-templates
       http://www.creativebloq.com/web-design/how-use-html-boilerplate-11513798
 
 
-  Join Lines Extension
-  --------------------
+
+
+
+Join Lines Extension
+----------------------------------------------------------------------
 
   https://github.com/wmaurer/vscode-join-lines
 
   Use Ctrl+j | ⌘+j to join lines, just like in Atom and similar to Sublime Text: the next line is joined to the 
   current line, and all whitespace is replaced with a single space.
 
+
+
+TypeScript Importer
+----------------------------------------------------------------------
+
+  automatically searches for TS definitions in the workspace files and
+  provides all known symbols as completion item to allow auto import.
+
+  Installation:
+    Launch VS Code Quick Open (ctrl-p)
+    ext install tsimporter
+
+  Configuration:
+    can be configured in ".vscode/settings.json"
+
+    tsimporter.filesToScan
+      defaults to ['**/*.ts', '**/*.tsx']
+
+    tsimporter.filesToExcude
+      files to exclude from watch and scan
+      e.g. ./out/**
+      defaults to nothing
+
+    tsimporter.showNotifications
+      default is false
+
+    tsimporter.doubleQuotes
+      use doubleQuotes rather than single
+
+    tsimporter.spaceBetweenBraces
+      insert spaces between the import braces
+        
+    tsimporter.disabled
+      disables the extension
+
+    tsimporter.removeFileExtensions
+      default is '.d.ts,.ts,.tsx'
+
+    tsimporter.lowImportance    
+      if true, the completion items will be sorted back to the build in completion items
+      defaults to false
+
+    tsimporter.emitSemicolon
+      default is true
+
+    tsimporter.tsconfigName
+      an alternative tsconfig.json filename.
+      default: 'tsconfig.json'    
+
+
+
+
+
+
+??? npm Intellisense
+----------------------------------------------------------------------
+
+??? ngrx for Angular 2 Snippets
+----------------------------------------------------------------------
+
+??? TypeScript Toolbox
+----------------------------------------------------------------------
+
+??? npm
+----------------------------------------------------------------------
+
+  npm commands for VSCode
+
+??? TsTools
+----------------------------------------------------------------------
+
+??? Angular 2 TypeScript Snippets
+----------------------------------------------------------------------
+
+??? Types auto installer
+----------------------------------------------------------------------
+
+??? Debugger fro Chrome
+----------------------------------------------------------------------
+
+
+
+
+??? VSCode Icons
+----------------------------------------------------------------------
+
+
+??? Add Angular2 Files
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
 
 
 
