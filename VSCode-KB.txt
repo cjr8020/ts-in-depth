@@ -567,6 +567,91 @@ TypeScript Importer
       default: 'tsconfig.json'    
 
 
+!!!  will TypeScript Hero conflict with tsimporter? ???? 
+
+
+
+TypeScript hero
+----------------------------------------------------------------------
+https://marketplace.visualstudio.com/items?itemName=rbbit.typescript-hero
+
+
+  provides additional tooling for TypeScript Language
+
+  * add imports to your current file
+  * add an import to the current name under the cursor
+  * add all missing imports of a file with one command
+  * Intellisense that suggests symbols and automatically adds imports
+  * "light bulb feater" that fixes your code
+  * sort and organize your imports
+  * restart your debug session when your code changes
+
+  All setting are preceeded by 'typescriptHero'
+
+  commands:
+
+  showCmdGui	
+  	Shows a small gui with all available internal commands
+  resolve.addImport	
+  	Shows a pick list with all recognized, importable symbols
+  resolve.addImportUnderCursor		
+    Imports the symbol under the cursor
+  resolve.addMissingImports		
+    Imports all missing symbols for the actual document
+  resolve.organizeImports		
+    Removes unused imports and orders all imports
+  resolve.rebuildCache		
+    Rebuilds the whole symbol cache (or index)
+  restartDebugger.toggle	
+    debug restarter	Toggles the active state of the debug restarter
+
+
+
+  Default keybindings:
+
+  showCmdGui	                  ctrl+alt+g
+  resolve.addImport	            ctrl+alt+i
+  resolve.addImportUnderCursor	ctrl+alt+shift+i
+  resolve.organizeImports	      ctrl+alt+o
+
+
+
+
+
+TypeScript Toolbox
+----------------------------------------------------------------------
+https://marketplace.visualstudio.com/items?itemName=DSKWRK.vscode-generate-getter-setter
+
+  add and optimize imports
+  generate getters/setters and constructors
+
+  installation:
+  ctrl-p
+  ext install vscode-generate-getter-setter
+
+  Usage:
+
+1. Just place your cursor within a TypeScript class definition in the text editor window
+2. Open the command palette ctrl+shift+P / cmd+shift+P.
+3. Search for 'Import', 'Generate Getter', 'Setter' or 'Constructor'
+
+or
+
+1. Just place your cursor within a TypeScript class definition in the text editor window
+2. Press alt+shift+G for a quick selection pop-up
+3. Select the preferred function from the pop-up menu
+
+or
+
+1. Click on the little Eye-Icon in your statusbar
+2. Select the preferred function from the pop-up menu
+
+  The generated method will be placed at the cursors position.  
+
+
+
+
+
 
 
 
@@ -577,8 +662,8 @@ TypeScript Importer
 ??? ngrx for Angular 2 Snippets
 ----------------------------------------------------------------------
 
-??? TypeScript Toolbox
-----------------------------------------------------------------------
+
+
 
 ??? npm
 ----------------------------------------------------------------------
@@ -606,7 +691,11 @@ TypeScript Importer
 
 ??? Add Angular2 Files
 ----------------------------------------------------------------------
-----------------------------------------------------------------------
+https://marketplace.visualstudio.com/items?itemName=sebastianbaar.vscode-add-angular2-files
+
+  NOTE: seems mostly same as $ ng generate <...>
+
+
 ----------------------------------------------------------------------
 
 
