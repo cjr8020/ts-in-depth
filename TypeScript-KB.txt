@@ -278,7 +278,7 @@ terminal
     Main use: with functions or code that will never be reached
 
 
-================================================================================
+==============================================================================
 
   Brackets  Braces  etc...
 ***************************
@@ -298,6 +298,7 @@ terminal
     two: 2
   }
 
+==============================================================================
 
 
 Destructuring
@@ -325,6 +326,8 @@ Destructuring works with already-declared variables as well:
 
   [first, second] = [second, first];  // swap the variables
 
+  
+
 
 Object Destructuring
 --------------------
@@ -339,8 +342,85 @@ Object Destructuring
     let { a, b } = o;
 
   This creates new variables, a and b, from o.a and o.b.  
+  Here, properties 'a' and 'b' got extracted and assigned.
+
   Notice, you can skip c if you don't need it.
 
+
+  It looks like you can take an entire Array and assign it as property to 
+  an object.
+
+  Suppose you have an array of objects:
+
+      let mockheroes = [
+        { id: 11, name: 'Mr. Nice' },
+        { id: 12, name: 'Narco' },
+        { id: 13, name: 'Bombasto' },
+        { id: 14, name: 'Celeritas' },
+        { id: 15, name: 'Magneta' },
+        { id: 16, name: 'RubberMan' },
+        { id: 17, name: 'Dynama' },
+        { id: 18, name: 'Dr IQ' },
+        { id: 19, name: 'Magma' },
+        { id: 20, name: 'Tornado' }
+      ];
+
+  It is an instance of Array:
+
+      if (mockheroes instanceof Array) {
+        console.log('mockheroes is an Array');  // prints .. 
+      }
+
+  If you use destructing assignment like so:
+
+    let a = { mockheroes };
+
+  'a' is an object and it has one property 'mockheroes' whose value is the
+  original array of Heroes:
+
+
+      if (a instanceof Array) {
+        console.log("'a' is also an Array"); // nope ...
+      }
+   
+      console.log(typeof a);  // just an object - prints 'object'
+
+      console.log('a now has a property "mockheroes" with the value of the Hero array');
+
+      for (var prop in a) {
+        console.log(`property: ${prop}`);
+        if (a.hasOwnProperty(prop)) {
+          console.log("a." + prop + " = " + a[prop]);
+        }
+      }
+
+        prints:
+
+          property: mockheroes
+          a.mockheroes = [object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]                  
+
+
+   And then, you can take that 'a.mockheroes' property value and type cast it
+   to Hero[] array using 'as' operator:
+
+      let heroes: Hero[] = a.mockheroes as Hero[];
+
+      for (let hero of heroes) {
+        console.log(`hero: ${hero.name}`);
+      }  
+
+        Prints:
+
+          hero: Mr. Nice
+          hero: Narco
+          hero: Bombasto
+          hero: Celeritas
+          hero: Magneta
+          hero: RubberMan
+          hero: Dynama
+          hero: Dr IQ
+          hero: Magma
+          hero: Tornado        
 
 
 
@@ -374,6 +454,22 @@ Object Destructuring
 
       let  someValue: any = 'this is a string';
       let strLength: number = (someValue as string).length;
+
+
+    Type casting
+    ------------
+
+      Use (<>) or the 'as' operator for casting.
+
+        let myObject: TypeA;
+        let otherObject: any;
+        // values are assigned to them, and...
+
+        myObject = <TypeA> otherObject;  // using <>
+        myObject = otherObject as TypeA; // using 'as'
+
+      'as' preferred and is default since TS 1.6
+
 
 
 
@@ -2050,6 +2146,31 @@ General purpose trick - ES5 introduced new method: bind() on all Function object
 
 ==============================================================================
 
+  RxJs
+  ****
+
+$ npm install --save RxJs
+
+
+import Rx = require("rxjs/Rx");
+
+  error: cannot find Promise
+
+$ npm install --save-dev @types/core-js
+
+  error: cannot find type definition for 'chai'
+
+$ npm install --save-dev @types/chai
+
+$ npm start # start the lite-server
+$ npm run build # to run tsc and watch for changes
+
+
+
+
+
+==============================================================================
+
   Using JS libraries with TypeScript
   **********************************
 
@@ -2105,7 +2226,8 @@ In your code:
 app.ts:
 
   import "jQuery";
-  $("#app").css({"background-color": "green"});    
+  $("#app").css({"background-color": "green"});
+
 
 ==============================================================================
 
@@ -2178,30 +2300,6 @@ move the bundle.js import script below its usage:
   <div id="app">Change it with jQuery</div>
 
   <script src="./js/bundle.js"></script>
-
-
-==============================================================================
-
-  RxJs
-  ****
-
-$ npm install --save RxJs
-
-
-import Rx = require("rxjs/Rx");
-
-  error: cannot find Promise
-
-$ npm install --save-dev @types/core-js
-
-  error: cannot find type definition for 'chai'
-
-$ npm install --save-dev @types/chai
-
-$ npm start # start the lite-server
-$ npm run build # to run tsc and watch for changes
-
-
 
 
 
