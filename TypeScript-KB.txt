@@ -340,8 +340,8 @@ Object Destructuring
 
   This creates new variables, a and b, from o.a and o.b.  
   Notice, you can skip c if you don't need it.
-  
-      
+
+
 
 
 ================================================================================
@@ -2131,7 +2131,7 @@ create webpack.config.js
 module.exports = {
   entry: "./app.ts",
   output: {
-    filename: "bundle.js"
+    filename: "./js/bundle.js"
   },
   module: {
     loaders: [
@@ -2177,7 +2177,7 @@ move the bundle.js import script below its usage:
 
   <div id="app">Change it with jQuery</div>
 
-  <script src="bundle.js"></script>
+  <script src="./js/bundle.js"></script>
 
 
 ==============================================================================
