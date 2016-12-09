@@ -7,7 +7,7 @@
 
 So now with weback, you need to run two commands:
 
-1.  To build the bundle:
+    1.  To build the bundle:
 
 ```
 $ npm run build
@@ -27,7 +27,7 @@ Time: 1841ms
 
 and
 
-2. To run the lite-server:
+    2. To run the lite-server:
 
 ```
 $ npm start
