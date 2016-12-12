@@ -962,34 +962,69 @@ Destructuring Arrays and Objects
       }  
 
 
-Template literals
------------------
+Template strings
+----------------
 
-  ES6 has two new kinds of literals:
+  syntactically, these are strings that use backticks (`` ) instead of single
+  or double quotes.  The motivation is three fold:
 
-    template literals
+    - string interpolation
+    - multiline strings
+    - taggled templates
 
-      - multi-line string literals that support interpolation
+String interpolation
 
-        const firstName = 'Jane';
-        console.log(`Hello ${firstName}!
-        How are you
-        today?`);
+  const url = `${this.heroesUrl}/${id}`;
 
-        // Output:
-        // Hello Jane!
-        // How are you
-        // today?        
+Multiline strings:
 
-    tagged template literals
+    template: `
 
-      Tagged template literals (short: tagged templates) are created by mentioning a function before a template literal:
+      <h1>{{title}}</h1>
+      <div class="header-bar"></div>
 
-        > String.raw`A \tagged\ template`
-        'A \\tagged\\ template'
+      <nav>
+        <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+        <a routerLink="/heroes" routerLinkActive="active">Heroes</a>
+      </nav>
+      <router-outlet></router-outlet>
 
-      Here, the method String.raw is called to produce the result of the 
-      tagged template.
+    `,
+
+Tagged templates
+
+  you can place a function (called a tag) before the template string and it
+  get the opportunity to pre process the template string literals plus the values
+  of all the placeholder expressions and return a result.
+
+  Example:
+
+    var say = "a bird in hand > two in the bush";
+
+    var html = htmlEscape `<div> I would just like to say: ${say}</div>`;
+
+    function htmlEscape(literals, ...placeholders) {
+
+      let result = "";
+
+      // interleave the literals with the placeholders
+      for (let i = 0; i < placeholders.length; i++) {
+          result += literals[i];
+          result += placeholders[i]
+              .replace(/&/g, '&amp;')
+              .replace(/"/g, '&quot;')
+              .replace(/'/g, '&#39;')
+              .replace(/</g, '&lt;')
+              .replace(/>/g, '&gt;');
+      }
+
+      // add the last literal
+      result += literals[literals.length - 1];
+      return result;      
+    }
+
+
+
 
 
 this
