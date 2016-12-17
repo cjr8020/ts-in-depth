@@ -894,6 +894,15 @@ DEFAULT values:
   let result3 = buildName("Bob", "Adams"); // result is "Bob Adams"
 
 
+Default parameter for object parameter type:
+
+
+  function retryStrategy( {} = {} ) {
+    ...
+  }
+
+
+
 
 Spread Operator
 ---------------

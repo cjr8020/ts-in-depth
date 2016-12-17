@@ -13,7 +13,10 @@ shift-alt-1     switch between hirozontal/virtical layout
 
 F2              rename (variable names)
 
+ctrl-p          Quick Open
+
 Ctrl-Shift-P    command pallette
+
 Ctrl-k Ctrl-H   toggle output (also command-pallette -> Toggle Output)
 
 
@@ -153,7 +156,14 @@ Peek
 shift+f12       show references (in peeked editor)
 ctrl+shift+f10  peek definition
 
-ctrl+shift+i    format/reformat code (DOCUMENT)
+  Format Code
+  -----------
+
+Entire document: 
+
+Windows:        shift-alt-f
+Linux:          ctrl-shift-i   
+
 ctrl-k ctrl-f   format SELECTION
 
 ctlr+shift+o    goto symbol
