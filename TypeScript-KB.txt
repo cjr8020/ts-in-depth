@@ -300,10 +300,126 @@ terminal
 
 ==============================================================================
 
+  Object Literal Property Value Shorthand
+  ***************************************
+  ES6 (ECMAScript 6) 
+
+While every object property needs to be either a key-value pair or 
+getter/setter, this may change..
+Another ES6 syntactic sugar is "object literal property value shorthand"
+
+  ES5:
+
+    function createMonster(name, power) {
+      return { type: 'Monster', name: name, power: power };
+    }
+
+    function createWitch(name) {
+      return { type: 'Witch', name: name };
+    }
+
+  ES6 shorthand:
+
+    function createMonster(name, power) {
+      return { type: 'Monster', name, power };
+    }
+
+    function createWitch(name) {
+      return { type: 'Witch', name };
+    }
+
+  Because the property value has the same name as the property identifier...
+
+  so, when you see this:
+
+    let a = { mockheroes };
+
+  that's really an object with property "mockheroes" and value being the variable
+  by the name of "mockheroes" as well.
+
+
+==============================================================================
+
 
 Destructuring
 =============
   ECMAScript 2015 feature.
+  http://exploringjs.com/es6/ch_destructuring.html
+
+  a convenient way of extracting multiple values from the data stored in
+  (possibly nested) objects and Arrays.  It can be used in locations that
+  receive data (such as the left-hand side of an assignment).
+
+  JavaScript has operations for constructing data, one property at a time.
+
+    const obj = {};
+    obj.first = 'Jane';
+    obj.last = 'Doe';
+
+  The same syntax can be used to extract data - again, one property at a time:
+
+    const f = obj.first;
+    const l = obj.last;
+
+  There is also syntax to construct multiple properties at the same time via
+  an object literal:
+
+    const obj = { first: 'Jane', last: 'Doe' };
+
+  Before ES6, there was no corresponding mechanism for extracting data.
+  That is what "destructuring" is - it lets you extract multiple properties 
+  from an object via an 'object pattern'.  
+
+  E.g. on the L-H side of an assigment:
+
+    const { first: f, last: l } = obj;  // f is 'Jane' and l is 'Doe'
+
+
+Patterns
+------------------
+
+  The following two parties are involved in destructuring:
+
+    o Destucturing source: data to be destructured
+        e.g. the R-H side of an assignment.
+
+    o Dstructuring target: the pattern used for destructuring
+        e.g. the L-H side of the assignment.
+
+  Destructuring target (L-H side) is one of three patterns:
+
+    1. assignment target  e.g. 'x'
+    2. object pattern,  e.g. { first: <pattern>, last: <pattern> }
+    3. array pattern  e.g. [ <<pattern>>, <<pattern>> ]
+
+  Pick what you need
+
+    if destructure an object, you mention only those properties that you are
+    interested in
+
+
+Object patterns corece values to objects
+----------------------------------------
+
+  The object pattern coerces destructing sources to objects before accessing 
+  properties.  e.g.:
+
+    const { length: len } = 'abc';    // len = 3
+
+  In the above example, 'abc' is coerced to String, and then its "length" 
+  property is extracted, so len gets 3.
+
+  You can use empty object pattern ( {} ) to check whether a value is 
+  coercible to an object:
+
+    ( {} = [true, false] ); // OK, Arrays are coercible to objects
+
+    ( {} = 'abc' );         // OK, strings are coercible to objects
+
+    ( {} = undefined );     // TypeError, undefined is not coercible to objects
+    ( {} = null );          // TypeError, neither is null
+
+
 
 
 Array destructuring
@@ -347,6 +463,10 @@ Object Destructuring
   Notice, you can skip c if you don't need it.
 
 
+Coercing
+----------  
+
+
   It looks like you can take an entire Array and assign it as property to 
   an object.
 
@@ -373,7 +493,9 @@ Object Destructuring
 
   If you use destructing assignment like so:
 
-    let a = { mockheroes };
+
+    let a = { mockheroes };  // this is ES6 object literal property value shorthand
+
 
   'a' is an object and it has one property 'mockheroes' whose value is the
   original array of Heroes:
@@ -422,9 +544,8 @@ Object Destructuring
           hero: Magma
           hero: Tornado        
 
-
-
-================================================================================
+ 
+ ================================================================================
 
   Types
   *****
@@ -611,6 +732,127 @@ typeof
 
   myself.bankAccount.deposit(300);
   console.log(myself);
+
+
+==============================================================================
+ 
+  typing destructured object parameters in TS
+  *************************************
+
+In TS, you can add a type annotation to each formal parameter of a function
+using a colon and the dsired type:
+
+  function greet(name: string) { .. }
+
+Lets now look at at a function declaration that makes use of a destructuring 
+assignment with an object parameter.
+
+Suppose, you have the 'toJSON' function accepts
+ - a 'value' argument of 'any' type to be stringified to JSON, and
+ - a object literal settings object that allows the caller to provide configuration
+   via properties:
+
+
+    function toJSON( value:any, {pretty} ) {
+      const indent = pretty ? 4 : 0;
+      return JSON.stringify(value, null, indent);
+    }
+
+
+the 'toJSON' function accepts the 'value' parameter of type 'any' ... 
+but what type does the 'pretty' property have?  
+it is not explicitly stated so it is implicitly typed as 'any'.
+
+
+Of course, if we want a boolean, we'd have to say so:
+
+  function toJSON(value: any, { pretty: boolean }) {...}
+
+However, this doesn't work!
+
+  (49,18): error TS2304: Cannot find name 'pretty'.
+
+This is because "boolean" is not a type annotation in this case, but the 
+"name of the local variable" that the value of "pretty" gets assigned to.
+
+  { pretty: boolean } // looks like a type annotation but it is NOT!!
+
+
+
+So here's how to do it in TS:
+-----------------------
+
+  function toJSON(value: any, { pretty }: {pretty:boolean}) {
+    const indent = pretty ? 4 : 0;
+    return JSON.stringify(value, null, indent);
+  }
+
+IMPORTANT: You're not directly typing the 'pretty' property, 
+but the settings object it belongs to which _is_ the actual parameter passed 
+to the function.
+
+
+Providing default values
+------------------------
+
+    const value = { foo: "bar" };
+
+    toJSON( value, { pretty: true } );  // #1
+    toJSON( value, { } );               // #2
+    toJSON( value );                    // #3
+
+  #1 works because all parameters are specified.
+
+  For #2 to work:
+
+    a) we have to mark the 'pretty' property as optional by 
+       appending a (?) to the property name within the type annotation.
+    b) also the 'pretty' property get the default value of 'true' if not specified:
+
+      function toJSON(value: any, {pretty = true}: { pretty?: boolean}) {
+        ...
+      }
+
+  For #3 to work, we need to provide a default value of ( {} ) for the 
+  destructuring pattern of the settings object.
+
+  If no settings object is passed at all, the empty object literal {} is being
+  destructured.  Because the default value of {} does not specify a value for
+  the "pretty" property, its fallback value "true" is returned:
+
+      function toJSON(value: any, { pretty = true }: { pretty?: boolean } = {}) {
+        const indent = pretty ? 4 : 0;
+        return JSON.stringify(value, null, indent);
+      }
+
+    Here is what the TS compiler targetting ES6 emits:
+
+      function toJSON(value, { pretty = true } = {} ) {
+        ...
+      }
+
+    - only the type information is removed.
+
+
+  Extracting a Type for the Settings parameter
+  --------------------------------------------
+
+With multiple properties, the inline type annotation gets unwieldy quickly,
+which is why it might be a good idea to create an interface for the configuration
+object:
+
+  interface SerializerSettings {
+    pretty?: boolean;
+  }  
+
+Now, you can type the settings parameter using the interface type:
+
+  function toJSON(value: any, { pretty = true }: SerializerSettings = {} ) {
+    ...
+  }
+
+much better...
+
 
 
 
