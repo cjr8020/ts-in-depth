@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "lite-server",
-    "build": "webpack -d --watch",
-    "build:prod": "webpack -p"
+    "start": "webpack-dev-server --watch --inline",
+    "postinstall": "typings install"
   },
   "repository": {
     "type": "git",
@@ -23,10 +22,10 @@
     "@types/chai": "^3.4.34",
     "@types/core-js": "^0.9.34",
     "@types/jquery": "^2.0.34",
-    "lite-server": "^2.2.2",
     "ts-loader": "^1.2.0",
     "typescript": "^2.0.9",
-    "webpack": "^1.13.3"
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
     "jquery": "^3.1.1",
