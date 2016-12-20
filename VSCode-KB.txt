@@ -11,8 +11,6 @@ ctrl-shift-`    create another terminal window.
 
 shift-alt-1     switch between hirozontal/virtical layout
 
-F2              rename (variable names)
-
 Ctrl-Shift-P    command pallette
 Ctrl-k Ctrl-H   toggle output (also command-pallette -> Toggle Output)
 
@@ -20,7 +18,14 @@ Ctrl-k Ctrl-H   toggle output (also command-pallette -> Toggle Output)
 refactor
 --------
 
-  F2            rename symbol (all occurrences)
+  ctrl-shift-f2            rename symbol (all occurrences in file)
+    !! don't do this with mstsc over citrix!!
+
+    note: default key mapping is ctrl-f2 but on ubuntu, this clashes with
+    switch virtual desktop.
+
+    on ubuntu, ctrl-F1|F2|F3|F4 switches virtual desktops
+
 
         TypeScript Hero key bindings
 
@@ -734,6 +739,8 @@ https://marketplace.visualstudio.com/items?itemName=jvitor83.typings-autoinstall
 
 ??? Debugger fro Chrome
 ----------------------------------------------------------------------
+https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome
+
 
 
 
