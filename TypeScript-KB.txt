@@ -278,7 +278,274 @@ terminal
     Main use: with functions or code that will never be reached
 
 
-================================================================================
+==============================================================================
+
+  Brackets  Braces  etc...
+***************************
+
+[] square brackets denote an array:
+
+  var a1 = [1, 2, 3];
+
+  Arrays can hold more than just values.
+
+  var a2 = [ 1, 2, ["apple", "orange"], {one: "grape", two: "banana"} ];
+
+{} braces denote an object.  Objects have key-value pairs like:
+
+  var a3 = {
+    one: 1,
+    two: 2
+  }
+
+==============================================================================
+
+  Object Literal Property Value Shorthand
+  ***************************************
+  ES6 (ECMAScript 6) 
+
+While every object property needs to be either a key-value pair or 
+getter/setter, this may change..
+Another ES6 syntactic sugar is "object literal property value shorthand"
+
+  ES5:
+
+    function createMonster(name, power) {
+      return { type: 'Monster', name: name, power: power };
+    }
+
+    function createWitch(name) {
+      return { type: 'Witch', name: name };
+    }
+
+  ES6 shorthand:
+
+    function createMonster(name, power) {
+      return { type: 'Monster', name, power };
+    }
+
+    function createWitch(name) {
+      return { type: 'Witch', name };
+    }
+
+  Because the property value has the same name as the property identifier...
+
+  so, when you see this:
+
+    let a = { mockheroes };
+
+  that's really an object with property "mockheroes" and value being the variable
+  by the name of "mockheroes" as well.
+
+
+==============================================================================
+
+
+Destructuring
+=============
+  ECMAScript 2015 feature.
+  http://exploringjs.com/es6/ch_destructuring.html
+
+  a convenient way of extracting multiple values from the data stored in
+  (possibly nested) objects and Arrays.  It can be used in locations that
+  receive data (such as the left-hand side of an assignment).
+
+  JavaScript has operations for constructing data, one property at a time.
+
+    const obj = {};
+    obj.first = 'Jane';
+    obj.last = 'Doe';
+
+  The same syntax can be used to extract data - again, one property at a time:
+
+    const f = obj.first;
+    const l = obj.last;
+
+  There is also syntax to construct multiple properties at the same time via
+  an object literal:
+
+    const obj = { first: 'Jane', last: 'Doe' };
+
+  Before ES6, there was no corresponding mechanism for extracting data.
+  That is what "destructuring" is - it lets you extract multiple properties 
+  from an object via an 'object pattern'.  
+
+  E.g. on the L-H side of an assigment:
+
+    const { first: f, last: l } = obj;  // f is 'Jane' and l is 'Doe'
+
+
+Patterns
+------------------
+
+  The following two parties are involved in destructuring:
+
+    o Destucturing source: data to be destructured
+        e.g. the R-H side of an assignment.
+
+    o Dstructuring target: the pattern used for destructuring
+        e.g. the L-H side of the assignment.
+
+  Destructuring target (L-H side) is one of three patterns:
+
+    1. assignment target  e.g. 'x'
+    2. object pattern,  e.g. { first: <pattern>, last: <pattern> }
+    3. array pattern  e.g. [ <<pattern>>, <<pattern>> ]
+
+  Pick what you need
+
+    if destructure an object, you mention only those properties that you are
+    interested in
+
+
+Object patterns corece values to objects
+----------------------------------------
+
+  The object pattern coerces destructing sources to objects before accessing 
+  properties.  e.g.:
+
+    const { length: len } = 'abc';    // len = 3
+
+  In the above example, 'abc' is coerced to String, and then its "length" 
+  property is extracted, so len gets 3.
+
+  You can use empty object pattern ( {} ) to check whether a value is 
+  coercible to an object:
+
+    ( {} = [true, false] ); // OK, Arrays are coercible to objects
+
+    ( {} = 'abc' );         // OK, strings are coercible to objects
+
+    ( {} = undefined );     // TypeError, undefined is not coercible to objects
+    ( {} = null );          // TypeError, neither is null
+
+
+
+
+Array destructuring
+-------------------
+
+  simplest form of destructuring is array destructuring assignment:
+
+    let input = [1, 2];
+    let [first, second] = input;
+    console.log(first);  // outputs 1
+    console.log(second); // outputs 2 
+
+This above creates two new variables named 'first' and 'second'.
+Destructuring assignment is equivalent to using indexing, but is more convenient:
+
+  first = input[0];
+  second = input[1];
+
+Destructuring works with already-declared variables as well:
+
+  [first, second] = [second, first];  // swap the variables
+
+  
+
+
+Object Destructuring
+--------------------
+
+  You can also destructure objects:
+
+    let o = {
+      a: "foo",
+      b: 12,
+      c: "bar"
+    }
+    let { a, b } = o;
+
+  This creates new variables, a and b, from o.a and o.b.  
+  Here, properties 'a' and 'b' got extracted and assigned.
+
+  Notice, you can skip c if you don't need it.
+
+
+Coercing
+----------  
+
+
+  It looks like you can take an entire Array and assign it as property to 
+  an object.
+
+  Suppose you have an array of objects:
+
+      let mockheroes = [
+        { id: 11, name: 'Mr. Nice' },
+        { id: 12, name: 'Narco' },
+        { id: 13, name: 'Bombasto' },
+        { id: 14, name: 'Celeritas' },
+        { id: 15, name: 'Magneta' },
+        { id: 16, name: 'RubberMan' },
+        { id: 17, name: 'Dynama' },
+        { id: 18, name: 'Dr IQ' },
+        { id: 19, name: 'Magma' },
+        { id: 20, name: 'Tornado' }
+      ];
+
+  It is an instance of Array:
+
+      if (mockheroes instanceof Array) {
+        console.log('mockheroes is an Array');  // prints .. 
+      }
+
+  If you use destructing assignment like so:
+
+
+    let a = { mockheroes };  // this is ES6 object literal property value shorthand
+
+
+  'a' is an object and it has one property 'mockheroes' whose value is the
+  original array of Heroes:
+
+
+      if (a instanceof Array) {
+        console.log("'a' is also an Array"); // nope ...
+      }
+   
+      console.log(typeof a);  // just an object - prints 'object'
+
+      console.log('a now has a property "mockheroes" with the value of the Hero array');
+
+      for (var prop in a) {
+        console.log(`property: ${prop}`);
+        if (a.hasOwnProperty(prop)) {
+          console.log("a." + prop + " = " + a[prop]);
+        }
+      }
+
+        prints:
+
+          property: mockheroes
+          a.mockheroes = [object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]                  
+
+
+   And then, you can take that 'a.mockheroes' property value and type cast it
+   to Hero[] array using 'as' operator:
+
+      let heroes: Hero[] = a.mockheroes as Hero[];
+
+      for (let hero of heroes) {
+        console.log(`hero: ${hero.name}`);
+      }  
+
+        Prints:
+
+          hero: Mr. Nice
+          hero: Narco
+          hero: Bombasto
+          hero: Celeritas
+          hero: Magneta
+          hero: RubberMan
+          hero: Dynama
+          hero: Dr IQ
+          hero: Magma
+          hero: Tornado        
+
+ 
+ ================================================================================
 
   Types
   *****
@@ -308,6 +575,22 @@ terminal
 
       let  someValue: any = 'this is a string';
       let strLength: number = (someValue as string).length;
+
+
+    Type casting
+    ------------
+
+      Use (<>) or the 'as' operator for casting.
+
+        let myObject: TypeA;
+        let otherObject: any;
+        // values are assigned to them, and...
+
+        myObject = <TypeA> otherObject;  // using <>
+        myObject = otherObject as TypeA; // using 'as'
+
+      'as' preferred and is default since TS 1.6
+
 
 
 
@@ -449,6 +732,127 @@ typeof
 
   myself.bankAccount.deposit(300);
   console.log(myself);
+
+
+==============================================================================
+ 
+  typing destructured object parameters in TS
+  *************************************
+
+In TS, you can add a type annotation to each formal parameter of a function
+using a colon and the dsired type:
+
+  function greet(name: string) { .. }
+
+Lets now look at at a function declaration that makes use of a destructuring 
+assignment with an object parameter.
+
+Suppose, you have the 'toJSON' function accepts
+ - a 'value' argument of 'any' type to be stringified to JSON, and
+ - a object literal settings object that allows the caller to provide configuration
+   via properties:
+
+
+    function toJSON( value:any, {pretty} ) {
+      const indent = pretty ? 4 : 0;
+      return JSON.stringify(value, null, indent);
+    }
+
+
+the 'toJSON' function accepts the 'value' parameter of type 'any' ... 
+but what type does the 'pretty' property have?  
+it is not explicitly stated so it is implicitly typed as 'any'.
+
+
+Of course, if we want a boolean, we'd have to say so:
+
+  function toJSON(value: any, { pretty: boolean }) {...}
+
+However, this doesn't work!
+
+  (49,18): error TS2304: Cannot find name 'pretty'.
+
+This is because "boolean" is not a type annotation in this case, but the 
+"name of the local variable" that the value of "pretty" gets assigned to.
+
+  { pretty: boolean } // looks like a type annotation but it is NOT!!
+
+
+
+So here's how to do it in TS:
+-----------------------
+
+  function toJSON(value: any, { pretty }: {pretty:boolean}) {
+    const indent = pretty ? 4 : 0;
+    return JSON.stringify(value, null, indent);
+  }
+
+IMPORTANT: You're not directly typing the 'pretty' property, 
+but the settings object it belongs to which _is_ the actual parameter passed 
+to the function.
+
+
+Providing default values
+------------------------
+
+    const value = { foo: "bar" };
+
+    toJSON( value, { pretty: true } );  // #1
+    toJSON( value, { } );               // #2
+    toJSON( value );                    // #3
+
+  #1 works because all parameters are specified.
+
+  For #2 to work:
+
+    a) we have to mark the 'pretty' property as optional by 
+       appending a (?) to the property name within the type annotation.
+    b) also the 'pretty' property get the default value of 'true' if not specified:
+
+      function toJSON(value: any, {pretty = true}: { pretty?: boolean}) {
+        ...
+      }
+
+  For #3 to work, we need to provide a default value of ( {} ) for the 
+  destructuring pattern of the settings object.
+
+  If no settings object is passed at all, the empty object literal {} is being
+  destructured.  Because the default value of {} does not specify a value for
+  the "pretty" property, its fallback value "true" is returned:
+
+      function toJSON(value: any, { pretty = true }: { pretty?: boolean } = {}) {
+        const indent = pretty ? 4 : 0;
+        return JSON.stringify(value, null, indent);
+      }
+
+    Here is what the TS compiler targetting ES6 emits:
+
+      function toJSON(value, { pretty = true } = {} ) {
+        ...
+      }
+
+    - only the type information is removed.
+
+
+  Extracting a Type for the Settings parameter
+  --------------------------------------------
+
+With multiple properties, the inline type annotation gets unwieldy quickly,
+which is why it might be a good idea to create an interface for the configuration
+object:
+
+  interface SerializerSettings {
+    pretty?: boolean;
+  }  
+
+Now, you can type the settings parameter using the interface type:
+
+  function toJSON(value: any, { pretty = true }: SerializerSettings = {} ) {
+    ...
+  }
+
+much better...
+
 
 
 
@@ -732,6 +1136,15 @@ DEFAULT values:
   let result3 = buildName("Bob", "Adams"); // result is "Bob Adams"
 
 
+Default parameter for object parameter type:
+
+
+  function retryStrategy( {} = {} ) {
+    ...
+  }
+
+
+
 
 Spread Operator
 ---------------
@@ -800,34 +1213,69 @@ Destructuring Arrays and Objects
       }  
 
 
-Template literals
------------------
+Template strings
+----------------
 
-  ES6 has two new kinds of literals:
+  syntactically, these are strings that use backticks (`` ) instead of single
+  or double quotes.  The motivation is three fold:
 
-    template literals
+    - string interpolation
+    - multiline strings
+    - taggled templates
 
-      - multi-line string literals that support interpolation
+String interpolation
 
-        const firstName = 'Jane';
-        console.log(`Hello ${firstName}!
-        How are you
-        today?`);
+  const url = `${this.heroesUrl}/${id}`;
 
-        // Output:
-        // Hello Jane!
-        // How are you
-        // today?        
+Multiline strings:
 
-    tagged template literals
+    template: `
 
-      Tagged template literals (short: tagged templates) are created by mentioning a function before a template literal:
+      <h1>{{title}}</h1>
+      <div class="header-bar"></div>
 
-        > String.raw`A \tagged\ template`
-        'A \\tagged\\ template'
+      <nav>
+        <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+        <a routerLink="/heroes" routerLinkActive="active">Heroes</a>
+      </nav>
+      <router-outlet></router-outlet>
 
-      Here, the method String.raw is called to produce the result of the 
-      tagged template.
+    `,
+
+Tagged templates
+
+  you can place a function (called a tag) before the template string and it
+  get the opportunity to pre process the template string literals plus the values
+  of all the placeholder expressions and return a result.
+
+  Example:
+
+    var say = "a bird in hand > two in the bush";
+
+    var html = htmlEscape `<div> I would just like to say: ${say}</div>`;
+
+    function htmlEscape(literals, ...placeholders) {
+
+      let result = "";
+
+      // interleave the literals with the placeholders
+      for (let i = 0; i < placeholders.length; i++) {
+          result += literals[i];
+          result += placeholders[i]
+              .replace(/&/g, '&amp;')
+              .replace(/"/g, '&quot;')
+              .replace(/'/g, '&#39;')
+              .replace(/</g, '&lt;')
+              .replace(/>/g, '&gt;');
+      }
+
+      // add the last literal
+      result += literals[literals.length - 1];
+      return result;      
+    }
+
+
+
 
 
 this
@@ -1984,6 +2432,31 @@ General purpose trick - ES5 introduced new method: bind() on all Function object
 
 ==============================================================================
 
+  RxJs
+  ****
+
+$ npm install --save RxJs
+
+
+import Rx = require("rxjs/Rx");
+
+  error: cannot find Promise
+
+$ npm install --save-dev @types/core-js
+
+  error: cannot find type definition for 'chai'
+
+$ npm install --save-dev @types/chai
+
+$ npm start # start the lite-server
+$ npm run build # to run tsc and watch for changes
+
+
+
+
+
+==============================================================================
+
   Using JS libraries with TypeScript
   **********************************
 
@@ -2039,7 +2512,8 @@ In your code:
 app.ts:
 
   import "jQuery";
-  $("#app").css({"background-color": "green"});    
+  $("#app").css({"background-color": "green"});
+
 
 ==============================================================================
 
@@ -2065,7 +2539,7 @@ create webpack.config.js
 module.exports = {
   entry: "./app.ts",
   output: {
-    filename: "bundle.js"
+    filename: "./js/bundle.js"
   },
   module: {
     loaders: [
@@ -2111,31 +2585,7 @@ move the bundle.js import script below its usage:
 
   <div id="app">Change it with jQuery</div>
 
-  <script src="bundle.js"></script>
-
-
-==============================================================================
-
-  RxJs
-  ****
-
-$ npm install --save RxJs
-
-
-import Rx = require("rxjs/Rx");
-
-  error: cannot find Promise
-
-$ npm install --save-dev @types/core-js
-
-  error: cannot find type definition for 'chai'
-
-$ npm install --save-dev @types/chai
-
-$ npm start # start the lite-server
-$ npm run build # to run tsc and watch for changes
-
-
+  <script src="./js/bundle.js"></script>
 
 
 

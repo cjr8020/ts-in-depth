@@ -11,7 +11,12 @@ ctrl-shift-`    create another terminal window.
 
 shift-alt-1     switch between hirozontal/virtical layout
 
+F2              rename (variable names)
+
+ctrl-p          Quick Open
+
 Ctrl-Shift-P    command pallette
+
 Ctrl-k Ctrl-H   toggle output (also command-pallette -> Toggle Output)
 
 
@@ -158,7 +163,14 @@ Peek
 shift+f12       show references (in peeked editor)
 ctrl+shift+f10  peek definition
 
-ctrl+shift+i    format/reformat code (DOCUMENT)
+  Format Code
+  -----------
+
+Entire document: 
+
+Windows:        shift-alt-f
+Linux:          ctrl-shift-i   
+
 ctrl-k ctrl-f   format SELECTION
 
 ctlr+shift+o    goto symbol
@@ -483,7 +495,12 @@ HTML code snippets
 
 https://github.com/abusaidm/html-snippets
 
-Type part of snippet, press enter -> snippet unfolds.
+Type part of snippet, press "enter" -> snippet unfolds. E.g.
+
+div --> <div></div>
+p   --> <p></p>
+
+
 
 
 
@@ -844,6 +861,40 @@ tsconfig.json
   }
 }
 
+
+
+================================================================
+
+  Version of TypeScript 
+  **********************
+
+VS Code ships with a recent stable version of TypeScript.
+It also performs version checking for any version of TypeScript you may have
+installed globally or locally in your workspace.
+
+  $ npm list typescript // locally 
+
+  $ npm list typescript -g // globally
+
+By default, VS Code will warn if your global version is different than VS Code's
+TS version since this may cause inconsistent compiler errors when building
+your project within VS Code and in an external terminal.
+
+You can also direct VS Code to use your workspace TypeScript version with the
+'typescript.tsdk' setting pointing to a directory containing the TS 
+'tsserver.js' file.
+
+e.g. to instruct VS Code to use the TS version in your workspace node_modules:
+
+  workspace settings.json:
+
+    {
+      "typescript.tsdk": "./node_modules/typescript/lib"
+    }
+
+After setting typescript.tsdk, restart VS Code and the TypeScript version
+will be shown in the bottom right of the Status Bar when you open a JavaScript
+or TypeScript file.
 
 
 ================================================================

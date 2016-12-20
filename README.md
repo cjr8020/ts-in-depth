@@ -2,6 +2,41 @@
 
 ## udemy understanding typescript
 
+
+### To run the project:
+
+So now with weback, you need to run two commands:
+
+    1.  To build the bundle:
+
+```
+$ npm run build
+
+> ts-in-depth@1.0.0 build /home/craiskin/ws/ts/ts-in-depth
+> webpack -d --watch
+
+ts-loader: Using typescript@2.1.4 and /home/craiskin/ws/ts/ts-in-depth/tsconfig.json
+Hash: 06385a13cdad52c456c6
+Version: webpack 1.14.0
+Time: 1841ms
+             Asset     Size  Chunks             Chunk Names
+    ./js/bundle.js   2.4 kB       0  [emitted]  main
+./js/bundle.js.map  2.54 kB       0  [emitted]  main
+    + 1 hidden modules
+```
+
+and
+
+    2. To run the lite-server:
+
+```
+$ npm start
+```
+
+
+
+#### Initial Setup
+
 Put project folder under npm control
 
 ```
