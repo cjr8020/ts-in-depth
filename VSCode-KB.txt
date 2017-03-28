@@ -64,7 +64,7 @@ Basic Editing
   ctrl-shift-enter  
                 insert line before
 
-  ctrl-shift-alt-down
+  ctrl-shift-alt-down  --> remapped to ctrl-shift-D
   ctrl-shift-alt-up  
                 copy line(s) down/up              
 
